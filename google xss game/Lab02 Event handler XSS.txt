@@ -1,0 +1,26 @@
+https://xss-game.appspot.com/level2
+
+
+You need to use an HTML element (like <img>, <a>, or <div>) with a JavaScript event attribute, like:
+
+<img src="x" onerror="alert('XSS')">
+
+
+<img> tries to load an image from x (which doesn’t exist)
+
+That causes an error
+
+onerror runs your JavaScript: alert('xss') 
+
+
+
+You're learning that XSS isn’t just:
+
+<script>badStuff()</script>
+
+It can be:
+
+<img onerror="badStuff()">
+<a onclick="badStuff()">
+<div onmouseover="badStuff()"> 
+

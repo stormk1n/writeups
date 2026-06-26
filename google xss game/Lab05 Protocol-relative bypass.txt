@@ -1,0 +1,54 @@
+https://xss-game.appspot.com/level5
+
+
+<body id="level5">
+    <img src="/static/logos/level5.png" /><br><br>
+    <!-- We're ignoring the email, but the poor user will never know! -->
+    Enter email: <input id="reader-email" name="email" value="">
+ 
+    <br><br>
+    <a href="{{ next }}">Next >></a>
+  </body>
+  
+  
+  The vulnerable line is:
+<a href="{{ next }}">Next >></a>
+
+
+{{ next }} is populated from user input (i.e. from the URL parameter ?next=...)
+
+This value is not escaped
+
+So your entire input becomes the value of the href attribute
+
+clicking that link will execute JavaScript, not just navigate to a normal page
+
+
+💥 XSS via javascript: URI
+
+You're not allowed to use onclick=... or <script>...</script> tags here.
+
+So instead, you abuse the href attribute itself.
+
+✅ Try this input in the URL:
+?next=javascript:alert(1)
+
+The resulting rendered HTML:
+<a href="javascript:alert(1)">Next >></a>
+
+The resulting rendered HTML:
+<a href="javascript:alert(1)">Next >></a>
+
+When the user clicks Next >>, the browser runs the JavaScript in the href.
+
+💥 Boom! You get a JavaScript execution.
+
+
+
+🔒 Why This Is Dangerous
+
+Users trust links.
+
+If an attacker injects a malicious javascript: URL, the user might click it, thinking it's safe.
+
+This can lead to session hijacking, cookie theft, or other attacks.

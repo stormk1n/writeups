@@ -1,0 +1,7 @@
+https://xss-game.appspot.com/level1
+
+
+Use basic script for lab01
+
+<script>alert(message)</script>
+

