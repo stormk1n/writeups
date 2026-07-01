@@ -19,33 +19,27 @@ https://xss-game.appspot.com/level5
 
 This value is not escaped
 
-So your entire input becomes the value of the href attribute
+So our entire input becomes the value of the href attribute
 
 clicking that link will execute JavaScript, not just navigate to a normal page
 
 
-💥 XSS via javascript: URI
+XSS via javascript: URI
 
-You're not allowed to use onclick=... or <script>...</script> tags here.
+We're not allowed to use onclick=... or <script>...</script> tags here.
 
-So instead, you abuse the href attribute itself.
+So instead, we'll abuse the href attribute itself.
 
-✅ Try this input in the URL:
+Try this input in the URL:
 ?next=javascript:alert(1)
-
-The resulting rendered HTML:
-<a href="javascript:alert(1)">Next >></a>
 
 The resulting rendered HTML:
 <a href="javascript:alert(1)">Next >></a>
 
 When the user clicks Next >>, the browser runs the JavaScript in the href.
 
-💥 Boom! You get a JavaScript execution.
 
-
-
-🔒 Why This Is Dangerous
+Why This Is Dangerous
 
 Users trust links.
 
