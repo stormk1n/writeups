@@ -16,7 +16,7 @@ function includeGadget(url) {
 }
 
 
- ✅ Line-by-Line Breakdown
+ Line-by-Line Breakdown
 
 🔹 `function includeGadget(url) {`
 
