@@ -1,3 +1,5 @@
+Vulnerability: XSS
+
 Take a look at the <input> tag for the title of a page
 
 Now break the order by placing "><script>alert(1)</script>
