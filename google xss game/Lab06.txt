@@ -49,7 +49,7 @@ function includeGadget(url) {
 
 
 
-🚨 What is happening here?
+What is happening here?
 
 The url is extracted from the fragment (#...) via:
 
@@ -62,19 +62,20 @@ If it does → it gets blocked
 
 Otherwise, it dynamically creates a <script src="..."> tag
 
-🧪 The Bypass Trick
-✅ Hint 2: “Is the security check really foolproof?”
+
+The Bypass Trick
+Hint 2: “Is the security check really foolproof?”  <--- From the lab
 
 Nope. It only blocks URLs starting with http via:
 
 url.match(/^https?:\/\//)
 
 
-But if you can insert a script tag pointing to a valid JavaScript file that doesn’t include "http" at the start — it gets loaded.
+But if we can insert a script tag pointing to a valid JavaScript file that doesn’t include "http" at the start — it gets loaded.
 
 The trick is: use a known JavaScript endpoint that doesn't start with http://.
 
-🔥 Hint 4: “See if google.com/jsapi?callback=foo helps”
+Hint 4: “See if google.com/jsapi?callback=foo helps” <-- From the lab
 
 Google’s jsapi endpoint is known to allow callback-based loading, meaning:
 
@@ -93,7 +94,7 @@ But the browser interprets it as a protocol-relative URL and loads it using HTTP
 
 
 
-✅ Working Exploit
+Working Exploit
 
 Try this in the URL:
 
