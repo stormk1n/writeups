@@ -1,0 +1,10 @@
+Lab05: User ID controlled by request parameter
+APPRENTICE
+
+METHOD
+login with the supplied creds, the lab is all about "horizontal privescal"
+
+so, in the url field change: https://<your_lab_id>.web-security-academy.net/my-account?id=wiener
+                         to: https://<your_lab_id>.web-security-academy.net/my-account?id=carlos
+                         
+submit carlos' API key to complete the task

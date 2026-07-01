@@ -1,0 +1,84 @@
+Lab08: Stored XSS into anchor href attribute with double quotes HTML-encoded
+
+Lv -> APPRENTICE
+
+
+1) Vuln: SXSS
+
+2) Trust Point: Comment section input fields (Website URL field)
+
+Goal: Execute arbitrary Javascript using a pseudo-protocol handler directly inside the href attribute without breaking out of the attribute boundaries.
+
+
+
+3) Assumption:
+The application assumes that HTML encoding double qoutes prevents an attacker from escaping the attribute string.
+
+
+
+4) Root Cause:
+<a href="YOUR_INPUT_HERE">Comment Author Name</a>
+
+The server stores the website parameter and reflects it directly into the href attribute. 
+While it prevents attribute breakout by encoding quotes, it completely fails to validate the URL scheme (protocol).
+
+
+
+4.1) Mental Map:
+HTTP comment POST request (website parameter)
+      ↓
+Application stores input in database
+      ↓
+Application renders comment section
+      ↓
+Input placed inside href="..." attribute
+      ↓
+Application encodes " characters (breakout blocked)
+      ↓
+Browser interprets input as URL payload
+      ↓
+Attacker uses javascript: pseudo-protocol
+      ↓
+Victim clicks the comment author's name
+      ↓
+Browser URL handler switches to JavaScript engine
+      ↓
+alert(1) executes JavaScript
+
+
+
+5) Exploit Method:
+Inject a malicious script utilizing a URI scheme handler into the Website input field, bypassing the need to break out of the HTML attribute string.
+
+Payload: javascript:alert(1)
+
+
+
+6) Impact:
+An attacker can execute arbitrary JavaScript in the victim's browser context by hosting a persistent comment that targets any user browsing the website.
+
+This may lead to:
+-Persistent session hijacking and credential harvesting
+-Defacement of public comment sections via DOM manipulation
+-Automated propagation of worms or malicious code to other site visitors
+-Forced background state-changing actions on behalf of authenticated users
+
+
+
+7) Pattern
+Occurs when:
+->Attacker-controlled data is accepted as a URL path and mapped directly into structural navigation attributes (href, src, action, formaction).
+
+->The application relies strictly on character filtering or boundary encoding (like neutralizing quotes) instead of implementing a strict URL validation whitelist.
+
+->The application fails to verify that the URL input starts exclusively with safe, explicitly allowed web protocols (such as http:// or https://).
+
+
+
+HOW TO CONFIRM
+Confirm by:
+>Submitting a standard reference URL (e.g., http://example.com) to locate exactly where the value maps to the DOM
+>Inspecting the DOM source to verify if the reflection sink is explicitly an anchor (<a>) href attribute
+>Testing quotes (") to verify that the application successfully sanitizes and encodes them into &quot;
+>Injecting a harmless javascript: URI scheme handler containing a standard execution verification string (e.g., javascript:console.log(1))
+>Clicking the resulting rendered element interface to confirm the browser invokes the JavaScript parser engine rather than standard web navigation

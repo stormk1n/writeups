@@ -1,0 +1,16 @@
+PRINCIPLE
+Access control vulnerabilities in multi-step processes
+
+Sometimes, a website will implement rigorous access controls over some of these steps, but ignore others. Imagine a website where access controls are correctly applied to the first and second steps, but not to the third step. The website assumes that a user will only reach step 3 if they have already completed the first steps, which are properly controlled. An attacker can gain unauthorized access to the function by skipping the first two steps and directly submitting the request for the third step with the required parameters
+
+
+
+Lab12: Multi-step process with no access control on one step
+PRACTITIONER
+
+METHOD
+
+Log in using the admin credentials.
+Browse to the admin panel, promote carlos, and send the confirmation HTTP request to Burp Repeater.
+Open a private/incognito browser window, and log in with the non-admin credentials.
+Copy the non-admin user's session cookie into the existing Repeater request, change the username to yours, and replay it.

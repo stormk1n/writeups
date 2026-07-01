@@ -1,0 +1,5 @@
+for a path traversal, change the fetch location of a file and moniter the output
+
+eg, say the site fetches an image as follows
+<img src="/loadimage?filename=img.png">
+at url, change the querry string parameter to ../../../etc/passwd and see

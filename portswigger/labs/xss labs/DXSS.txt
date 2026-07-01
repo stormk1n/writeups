@@ -1,0 +1,51 @@
+A realistic bug bounty mindset (what pros actually do)
+
+They don’t:
+
+read everything
+trace every variable
+manually inspect every sink
+
+They do:
+
+
+
+1. Map input surfaces
+
+Where can I influence data?
+
+URLs
+API calls
+forms
+JSON responses
+file uploads
+
+
+
+2. Map rendering surfaces
+
+Where does the UI display that data?
+
+search results
+profile pages
+dashboards
+notifications
+comments
+
+
+
+3. Look for “danger transformations”
+
+This is the real gold:
+
+HTML injection
+template rendering
+markdown parsing
+JSON → HTML conversion
+DOM insertion without escaping
+
+
+
+4. Confirm exploitability
+
+Only then worry about payloads.

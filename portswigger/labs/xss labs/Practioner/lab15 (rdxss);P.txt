@@ -1,0 +1,56 @@
+Lab 15: Reflected XSS into HTML context with all tags blocked except custom ones
+
+Lv -> PRACTITIONER
+
+
+1) Vuln: RXSS
+
+
+2) Trust Point: search query
+
+Goal: Inject a custom HTML tag that executes JavaScript automatically without user interaction
+
+
+3) Assumption
+- The application assumes that blocking standard HTML tags (like <script>, <img>, <body>) prevents XSS.
+
+- They forgot that modern browsers parse custom HTML tags (e.g., <xss>) and will still execute standard event handlers attached to them.
+
+
+4) Root Cause:
+- The server uses a flawed regex WAF blacklist.
+
+- It blocks known HTML tags but permits any unknown text string inside angle brackets < >
+
+
+
+5) Exploit Method:
+- Because standard tags are blocked and interactive events (like onload) fail on custom inline tags, we must use a combination of an element ID, a focus event, and a URL hash to force execution.
+
+Payload: <ping id='x' autofocus onfocus="alert(document.cookie)" tabindex="1"></ping>
+
+
+5.1: Payload Breakdown
+id=x Gives the custom tag a unique identifier
+
+tabindex=1 Makes a normally non-focusable custom element focusable
+
+onfocus= Triggers the payload once the element is set to autofocus
+
+#x Instructs the broser to scroll to and shift focus to our element with id="x" once it loads
+
+
+DELIVERY
+<script>
+location = 'https://LAB-ID.web-security-academy.net/?search=%3Cxss+id%3Dx+onfocus%3Dalert%28document.cookie%29%20tabindex=1%3E#x';
+</script>
+
+
+
+6) HOW TO SPOT
+Look for behaviors like:
+-> WAF Test: input <script> <img> etc results in "Tag not allowed" or 403 Forbidden
+
+-> Input an arbitrary string inside brackets to test the waf
+
+-> Check the page source to see if the custom tag appears without being escaped

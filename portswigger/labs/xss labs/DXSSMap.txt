@@ -1,0 +1,167 @@
+🧭 Real-World DOM XSS Hunting Checklist (Bug Bounty Workflow)
+
+Think of this as a fast scanning loop, not deep reading.
+
+
+
+1) Find input you can control (Sources)
+
+Look for anything you can influence:
+
+URL parameters (?q=, ?search=, ?id=)
+URL fragment (#)
+API responses (JSON rendering in UI)
+profile fields (name, bio, avatar URL)
+comments / chat / feedback
+postMessage (cross-frame apps)
+localStorage / sessionStorage usage
+
+👉 Goal: “Where does my input enter the system?”
+
+
+
+2) Find where it shows up in the UI (Reflection points)
+
+Now don’t think code — think screens:
+
+search results page
+dashboards
+user profiles
+error messages
+notifications
+previews (important!)
+
+👉 Ask:
+
+“Where does my input get displayed back to me or others?”
+
+
+
+3) Look for risky rendering behavior (Sinks in disguise)
+
+You are NOT searching for keywords everywhere. You’re looking for behaviors like:
+
+Direct HTML injection patterns:
+innerHTML
+outerHTML
+insertAdjacentHTML
+Framework equivalents:
+React: dangerouslySetInnerHTML
+Vue: v-html
+Angular: bypassed sanitization
+Template-like rendering:
+Markdown rendering
+HTML email previews
+rich text editors
+
+👉 Key idea:
+
+“Is my input being treated as text… or HTML?”
+
+
+
+4) Check for sanitization (quick reality check)
+
+Before even trying payloads, ask:
+
+Is there encoding? (&lt;, &gt;)
+Is HTML stripped?
+Is a sanitizer used (DOMPurify, etc.)?
+
+If YES → harder, but not impossible
+If NO → high priority target
+
+
+
+5) Try a minimal probe payload (not full exploit yet)
+
+Start simple:
+
+<test>
+
+or
+
+"><test>
+
+You’re not trying to pop XSS yet — you’re asking:
+
+“Does this break HTML context?”
+
+⚠️ Now the important part: “Confirm exploitability”
+
+This is what I meant earlier.
+
+💡 What “confirm exploitability” actually means
+
+Finding a sink is NOT enough.
+
+You must confirm:
+
+“Can attacker-controlled input actually execute JavaScript in a real user context?”
+
+There are 3 levels:
+❌ 1. Sink exists but not reachable
+
+Example:
+
+innerHTML is used
+BUT input is never attacker-controlled
+
+👉 Not exploitable
+
+⚠️ 2. Input is controllable but sanitized
+
+Example:
+
+<script> blocked
+tags stripped
+HTML escaped properly
+
+👉 Likely not exploitable (or needs bypass research)
+
+✅ 3. Input → sink → execution path works
+
+Example:
+
+input reaches innerHTML
+HTML is interpreted
+event handler executes (onerror, onload)
+
+👉 This is real exploitability
+
+🔥 Real exploitability test (simple mental version)
+
+Ask yourself:
+
+“Can I make the browser execute my code, not just display my text?”
+
+If YES → exploitable
+If NO → not XSS (or needs bypass work)
+
+⚠️ Common beginner mistake
+
+Finding this:
+
+<div>your input here</div>
+
+and thinking:
+
+“I found XSS”
+
+But if it’s escaped:
+
+&lt;img&gt;
+
+then:
+
+it’s not exploitable yet
+
+🧠 Final mental model (this is the real skill)
+
+DOM XSS hunting is:
+
+Source → Flow → Sink → Rendering behavior → Execution proof
+
+Not:
+
+“I saw innerHTML = vulnerability”

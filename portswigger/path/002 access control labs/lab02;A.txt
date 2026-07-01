@@ -1,0 +1,9 @@
+Lab02: Unprotected admin functionality with unpredictable URL
+APPRENTICE
+
+METHOD
+after visiting the site, open the devTools Element tab and search for admin
+
+at the 4th result, see the script being called
+
+use the url (/admin-bhiipj) found to get to the admin panel

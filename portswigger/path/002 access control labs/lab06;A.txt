@@ -1,0 +1,17 @@
+PRINCIPLE
+In some cases, an application does detect when the user is not permitted to access the resource, and returns a redirect to the login page. However, the response containing the redirect might still include some sensitive data belonging to the targeted user, so the attack is still successful.
+
+
+
+Lab06: User ID controlled by request parameter with data leakage in redirect
+APPRENTICE
+
+METHOD
+as the lab says, "sensitive info is leaked in a ridirect", meaning, keep an eye out for "302s"
+
+login with your creds, at the url: https://<your_lab_id>.web-security-academy.net/my-account?id=wiener
+                        change to: https://<your_lab_id>.web-security-academy.net/my-account?id=carlos
+
+during the redirect, keep a lookout for a "GET /my-account?id=carlos"
+
+look for carlos' API key in the response body and submit to complete the lab

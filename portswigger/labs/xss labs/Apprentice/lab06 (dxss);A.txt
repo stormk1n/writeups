@@ -1,0 +1,146 @@
+Lab06: DOM XSS in jQuery selector sink using a hashchange event
+
+Lv -> APPRENTICE
+
+1) Vuln: DXSS
+
+
+
+2) Trust Point: URL hash fragment (location.hash)
+
+FOCUS
+Source: location.hash
+- Transform:
+    >slice(1)
+    >decodeURIComponent()
+- Sink: vulnerable jQuery selector (:contains(...))
+- Trigger: hashchange event
+- Goal: Force jQuery to create an attacker-controlled DOM node capable of executing JavaScript
+
+
+
+3) Assumption
+The application assumes data obtained from location.hash is safe to place inside a jQuery selector expression and therefore does not require validation, sanitization, or escaping before use.
+
+Additionally, the developer assumes the jQuery selector will only search existing DOM elements rather than interpret attacker-controlled HTML.
+
+
+
+4) Root Cause:
+ $(window).on('hashchange', function(){
+     var post = $('section.blog-list h2:contains(' + decodeURIComponent(window.location.hash.slice(1)) + ')');
+     if (post) post.get(0).scrollIntoView();
+});
+
+
+
+4.1) Mental Map:
+location.hash
+      ↓
+slice(1)
+      ↓
+decodeURIComponent()
+      ↓
+jQuery :contains(...)
+      ↓
+jQuery interprets attacker input
+      ↓
+DOM node creation
+      ↓
+Browser processes src attribute
+      ↓
+onerror executes JavaScript
+
+
+
+5) Exploit Method:
+Inject a malicious payload into the URL hash fragment.     
+
+Payload: <img src=x onerror=print()>
+
+Full exploit delivery: <iframe src="https://LAB-ID/web-security-academy.net/#" onload="this.src+='<img src=x onerror=print()>'">
+
+
+
+5.1) Code Analysis:
+-Event Listener: $(window).on('hashchange', function() {
+  >The page listens for changes to the URL hash.
+  
+  >Example: https://site.com/#payload
+  
+  >Changing the hash automatically triggers this function.
+  
+-User-Controlled Source: window.location.hash.slice(1)
+  >window.location.hash contains everything after #.
+  
+  >Example: #<img src=x onerror=print()>
+  
+  >slice(1) removes the # character: <img src=x onerror=print()>. The attacker fully controls this value.
+  
+-Vulnerable Selector Sink: $('section.blog-list h2:contains(' + attackerInput + ')')
+  >The application expects the input to behave as plain text for the :contains() selector.
+  However, vulnerable jQuery versions incorrectly interpret injected HTML tags and create DOM elements from attacker input.
+  Instead of merely searching the DOM, jQuery creates a detached DOM node.
+
+
+
+5.2) Why the iframe is Needed:
+The vulnerability only triggers after a hashchange event.
+
+The iframe automates this process:
+<iframe src="https://LAB-ID/web-security-academy.net/#" onload="this.src+='<img src=x onerror=print>'">
+
+Flow
+iframe loads page
+      ↓
+onload executes
+      ↓
+hash value changes
+      ↓
+hashchange event fires
+      ↓
+vulnerable jQuery executes
+      ↓
+malicious DOM node created
+      ↓
+onerror executes JavaScript
+
+
+
+6) Impact:
+An attacker can execute arbitrary JavaScript in the victim’s browser by supplying a crafted URL fragment.
+
+This may lead to:
+
+-session hijacking
+-phishing overlays
+-DOM manipulation
+-credential theft
+-actions performed on behalf of the victim
+
+
+
+7) Pattern
+This pattern occurs when:
+
+-Attacker-controlled client-side data: (location.hash, location.search, document.URL)
+
+-Is inserted into unsafe DOM-processing functions especially selector engines or HTML-parsing APIs without validation or escaping
+
+-Older jQuery versions are especially dangerous because selector parsing could unintentionally create executable DOM nodes from attacker input.
+
+
+
+HOW TO CONFIRM
+You confirm by:
+
+>modifying the URL hash
+>observing hashchange behavior
+>inspecting jQuery selectors
+>testing HTML injection into selectors
+>observing detached DOM node creation
+>monitoring automatic browser requests from src
+>Triggering JavaScript via event handlers (onerror)
+
+WATCH:
+https://youtu.be/5OiWO5Qr-iI

@@ -1,0 +1,13 @@
+for a broken access control
+try changing the by searching for a url to an admin pannel then navigate there
+
+
+Also try forging cookie values at the application tab in dev tools after login in with ur creds
+
+Can find info for horizontal privescal by navigating the path searching for blogs or post that refference other users.
+                 you might be able to find the user id there
+
+
+Also, remember to always mess around with the parameters and see what happens
+               eg try login in (url may look like ?/id=(u_name)) try changing u_name to something like admin
+               we never know :)

@@ -1,0 +1,46 @@
+Lab14: Reflected XSS into HTML context with most tags and attributes blocked
+
+Lv -> PRACTITIONER
+
+
+1) Vuln: Vuln: RXSS (Reflected Cross-Site Scripting) with WAF Bypass
+
+
+2) Trust Point: search query
+
+-Goal: Craft a non-interactive payload that bypasses the WAF to execute print() automatically without user interaction.
+
+
+3) Assumption:
+The application assumes that restricting structural markup to an aggressively blocklisted set of common XSS elements like <script>, <img>, onerror, onload makes it safe to reflect unencoded query text into the page context.
+
+
+
+4) Root Cause:
+- The custom Web Application Firewall (WAF) screens input using a flawed blocklist validation strategy. Instead of context-aware output encoding or an allowlist approach, it rejects specific string patterns. 
+- Because it fails to block the entire HTML standard specification, valid execution tags and non-standard automated event handlers are left accessible to automated discovery
+
+
+
+5) Exploit Method:
+Map the boundaries of the WAF, and  automate enumeration to discover permitted tags and attributes using burp intruder along with the xss cheat sheet on portswigger:
+
+<body> tag and onresize attribute are permitted without any issues
+
+Payload: <body onresize=print()>
+
+
+5.1) Delivery
+<iframe src="https://LAB-ID.web-security-academy.net/?search=<body onresize=print()>" onload=this.style.width='100px'>
+
+
+
+6) Pattern:
+-> The edge defense relies on blocklist checking instead of context-aware output serialization
+
+
+
+7) HOW TO CONFIRM
+> Sending baseline characters (<>) to ensure that basic tag syntax parsing elements are not strictly HTML-entity encoded by the framework engine
+
+

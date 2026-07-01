@@ -1,0 +1,14 @@
+Lab01: File path traversal, simple case
+APPRENTICE
+
+see server side vulns, path traversal lab for lab01 of this section
+
+
+
+Lab02: File path traversal, traversal sequences blocked with absolute path bypass
+PRACTITIONER
+
+inspect on the image and change the "filename=<img>" to "/etc/passwd"
+
+to see the creds, look for a burp interception having /etc/passwd
+

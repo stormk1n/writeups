@@ -1,0 +1,12 @@
+first, visit the webpage, click on any product like before and monitor in burp.
+
+Now look for any response with a 'POST' and send to intruder
+
+while at intruder, set the ip to 192.168.0.$, changing nothing else on this request, then click start attack
+
+Notice we get 200 (for ip.1) and 404 (for ip.***) with lots of 500 ( the rest)
+
+also, look closely at the 404 response message, sounds phishy doesn't it ?
+
+send this to repeater, now change the path of this ip to ip/admin
+the task can now be solved following the privious labs method

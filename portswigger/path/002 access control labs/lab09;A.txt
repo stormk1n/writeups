@@ -1,0 +1,42 @@
+PRINCIPLE
+Horizontal to vertical privilege escalation
+
+Horizontal privilege escalation means accessing another normal user’s account.
+But if the attacker uses this trick on an admin account, it becomes vertical escalation, because they now have more power than they should.
+For example, if the attacker can steal or reset an admin's password, they can log in as the admin.
+Once they do that, they have full control — that’s vertical privilege escalation.
+
+
+
+An attacker logs in with an id as /myaccount?id=321
+
+The attacker changes a URL like:
+
+/myaccount?id=456
+
+to look at someone else’s account.
+
+If that account belongs to an admin, they might see:
+
+The admin’s private data
+
+A way to change the admin's password
+
+Or even admin-only tools and buttons
+
+That means they went from being a normal user to having admin access — a vertical privilege escalation.
+
+
+
+
+Lab09: User ID controlled by request parameter with password disclosure
+APPRENTICE
+
+METHOD
+login with the creds provided
+
+change /my-account?id=wiener to /my-account?id=administrator
+
+inspect on the form presented to get the admins password
+
+login as admin and delete the user carlos to complete the lab

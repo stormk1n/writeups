@@ -1,0 +1,26 @@
+Lab: Username enumeration via response timing
+PRACTITIONER
+
+
+PRINCIPLE
+The response time for a valid user should take longer, as it has to verify both the username and password
+
+So, in that regard if a username is wrong it should take a smaller amount of time, since an invalid username instantly fails the login
+
+But a valid username and an invalid password should take a longer amount of time compared to when it is invalid and a shorter amount of time compared to when both factors are valid
+
+
+METHOD
+Make a login request and send to intruder (feel free to tamper with username and password to see the time difference).
+
+Notice that after a few attempts at login, we are rate limitted ? Fix this by setting the header X-Forwarded-For
+
+This header is used to specify the ip address being used to request resources
+
+Now, set the attack type to Pitchfork attack (so that we can parallely send to payloads at the sametime) and add the payload positions for both username and the X-Forwarded-For header ( this should be set to numbers from 0 - 100 or any 101 values since our username wordlist has 101 entries)
+
+Sort by response completed, then extract the username that has a greater response completed
+
+Now, change the X-Forwarded-For header to a different set of 100 values and set the payload position to the password  field
+
+Sort by status code and use the creds found in the status code of 302 to login and solve the lab

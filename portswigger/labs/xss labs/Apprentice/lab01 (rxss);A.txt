@@ -1,0 +1,34 @@
+Lab01: Reflected XSS into HTML context with nothing encoded
+
+Lv -> APPRENTICE
+
+1) Vuln: RXSS
+
+
+2) Trust Point: search field
+
+Goal: Perform a cross-site scripting attack that calls the alert function.
+
+3) Assumption:
+The application assumes that user input inserted into an HTML element’s text context (like an <h1> tag) is safe and does not require output encoding or sanitization.
+
+
+4) Root Cause:
+user input from the search field is reflected directly inside an <h1> tag without encoding
+
+eg <h1>0 search results for '<b><u>stormk1n</u></b>'</h1>
+
+
+5) Exploit Method:
+Craft any basic xss payload and use as a search query to solve the lab
+
+like <script>alert(1)</script>
+
+
+6) Impact:
+->An attacker can execute arbitrary JavaScript in the victim’s browser in the context of the vulnerable application, leading to session hijacking, credential theft, or unauthorized actions on behalf of the user.
+->The attack requires user interaction (e.g., clicking a crafted link), making it suitable for phishing or social engineering campaign
+
+
+7) Pattern:
+Unsanitized user input from request parameters (search queries, or URL parameters) is directly embedded into the HTML text context (inside tags like <h1>, <h2>, <p>, etc.), enabling injection of arbitrary HTML/JavaScript.

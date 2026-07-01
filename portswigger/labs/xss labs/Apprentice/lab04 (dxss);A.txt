@@ -1,0 +1,112 @@
+Lab04: DOM XSS in innerHTML sink using source location.search
+
+Lv -> APPRENTICE
+
+
+1) Vuln: DXSS
+
+
+2) Trust Point: Search field
+
+FOCUS
+- Source: location.search (data from the URL parameters you control)
+- Sink: innerHTML (dangerous because it parses HTML and it rewrites part of the DOM)
+- Goal:  Execute arbitrary JavaScript by injecting an HTML element containing a malicious event handler
+
+NB
+- When reading js, always map: SOURCE  →  TRANSFORM  →  SINK
+
+
+
+3) Assumption:
+The application assumes that data obtained from location.search (URL parameters) is safe to render inside the DOM using innerHTML, and therefore does not require sanitization or encoding before being inserted into the page.
+
+
+
+4) Root Cause
+Looking at
+  <script>
+    var query = (new URLSearchParams(window.location.search)).get('search'); <---- Where user data enters the app
+     if(query) {
+    doSearchQuery(query);
+          }
+    function doSearchQuery(query) {
+             document.getElementById('searchMessage').innerHTML = query;  <---- Writes the data to a dom element
+          }
+  </script>
+
+
+NOTE:
+->innerHTML does not execute scripts directly inside <script> tags
+->Instead, it parses HTML and triggers JavaScript via event handlers (onerror, onload, etc.), so Usable payload types include html tags with javascript hooks
+
+
+
+4.1) Mental Map
+For this lab, we had
+location.search
+   ↓
+URLSearchParams.get('search')
+   ↓
+innerHTML   ← vulnerable sink
+
+
+
+5) Eploit Method
+Inject a payload via the search parameter that introduces an HTML element with a JavaScript event handler.
+
+Payload: <img src=x onerror="alert('1')">
+
+
+
+5.1) Code Analysis:
+
+-var query = (new URLSearchParams(window.location.search)).get('search');
+
+>window.location.search = everything after ? in the URL. The attacker fully controls this value
+
+Example: https://site.com/?search=<img src="x" onerror="alert('1')">
+
+Implying query now equals "<img src="x" onerror="alert('1')">" in memory
+
+
+-if (query) {
+    doSearchQuery(query);}
+
+>Important observation: The input is passed as-is and no filtering, no encoding, nor any validation is done
+
+Thus the payload is unchanged and passed as
+doSearchQuery("<img src="x" onerror="alert('1')">");
+
+This leads to untrusted data flowing through the program without restriction
+
+
+Where the browser interprets data as code
+
+-document.getElementById('searchMessage').innerHTML = query;
+
+What innerHTML actually does when you assign a value to it, the browser:
+>Treats the string as HTML markup
+>Parses it
+>Creates DOM nodes
+>Executes any executable content
+
+
+
+5.2) How it fell apart:
+->The payload is inserted directly into innerHTML without filtering
+->The browser parses <img> as a DOM element
+->The invalid image source (x) triggers an error
+->The onerror event handler executes JavaScript
+->No need to break out of attributes or script context
+->Execution happens via DOM event handlers triggered during rendering
+
+
+
+6) Impact
+An attacker can execute arbitrary JavaScript in the victim’s browser by crafting a malicious URL. This can lead to session hijacking, credential theft, DOM manipulation, phishing overlays, and actions performed on behalf of the user within the application context.
+
+
+
+7) Pattern
+User-controlled data from client-side sources (e.g., location.search, location.hash, document.URL) is directly written into the DOM using unsafe sinks (e.g., innerHTML) without sanitization or encoding, allowing injected HTML to be parsed and executed as JavaScript via event handlers, resulting in DOM-based XSS.

@@ -1,0 +1,33 @@
+Lab02: Stored XSS into HTML context with nothing encoded
+
+Lv -> APPRENTICE
+
+1) Vuln: SXSS
+
+
+2) Trust Point: Comment Section
+
+Goal: Submit a comment that calls the alert function when the blog post is viewed.
+
+3) Assumption:
+The application assumes that user-submitted content stored in the comment system is safe to render as HTML and does not require output encoding or sanitization when displayed to other users.
+
+
+4) Root Cause:
+User input is stored in the comment section
+
+eg <p><u>stormk1n</u></p>
+
+
+5) Exploit Method:
+Craft any basic xss payload and use as input to the comments field to solve the lab
+
+like <img src=x onerror="alert(1)">
+
+
+6) Impact:
+Successful exploitation allows persistent execution of arbitrary JavaScript in the context of the application for any user who views the malicious content. This can result in session hijacking, credential harvesting, defacement of page content, or performing unauthorized actions on behalf of victims without requiring further user interaction.
+
+
+7) Pattern:
+Unsanitized user input submitted through persistent features (e.g., comment fields, forums, profiles) is stored server-side and rendered to other users without output encoding, enabling stored cross-site scripting.

@@ -1,0 +1,47 @@
+Lab09: Reflected XSS into a JavaScript string with angle brackets HTML encoded
+
+Lv -> APPRENTICE
+
+
+1) Vuln: RXSS
+
+
+2) Trust Point: Search query
+
+Goal: Break out of the JavaScript string literal context and inject arbitrary executable code without relying on HTML tags or angle brackets
+
+
+
+3) Assumption:
+The application assumes that HTML encoding angle brackets (< and >) completely neutralizes Cross-Site Scripting threats, rendering user input safe for reflection.
+
+
+
+4) Root Cause:
+The code block
+
+ var searchTerms = 'My Value';
+ document.write('<img src="/resources/images/tracker.gif?searchTerms='+encodeURIComponent(searchTerms)+'">');
+
+The server reflects user input directly into an inline JavaScript string literal. While it neutralizes angle brackets, it completely fails to escape or sanitize the single quote (') delimiter character.
+
+
+
+5) Exploit Method:
+Inject a malicious payload into the search parameter to break out of the JavaScript string context, terminate the variable assignment statement, insert an executable function, and discard the rest of the original line.
+
+Payload: ';alert(1);//
+
+
+
+6) Impact
+An attacker can execute arbitrary JavaScript in the victim’s browser by crafting a malicious URL. This can lead to session hijacking, credential theft, DOM manipulation, or unauthorized actions performed on behalf of the user.
+
+
+
+7) Pattern:
+-> Attacker-controlled data is reflected dynamically inside client-side scripting templates or inline blocks (<script>...</script>).
+
+-> The validation logic uses a generic defense-in-depth tactic (like HTML entity encoding) that does not match the contextual environment (which requires JavaScript string escaping).
+
+-> The application fails to prevent or escape the explicit string literal delimiter characters (' or ") used to define variable data data structures.

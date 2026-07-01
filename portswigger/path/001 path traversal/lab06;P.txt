@@ -1,0 +1,17 @@
+PRINCIPLE
+Common obstacles to exploiting path traversal vulnerabilities - Continued
+
+An application may require the user-supplied filename to end with an expected file extension, such as .png. In this case, it might be possible to use a null byte to effectively terminate the file path before the required extension. For example: filename=../../../etc/passwd%00.png.
+
+
+
+Lab06: File path traversal, validation of file extension with null byte bypass
+PRACTITIONER
+
+METHOD
+
+Use Burp Suite to intercept and modify a request that fetches a product image.
+Modify the filename parameter, giving it the value:
+
+../../../etc/passwd%00.png
+Observe that the response contains the contents of the /etc/passwd file.

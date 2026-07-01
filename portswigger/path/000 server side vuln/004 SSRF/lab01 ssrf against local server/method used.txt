@@ -1,0 +1,11 @@
+first, visit the /admin panel. Notice the error message displayed :), sounds juicey doesn't it
+
+now, view any product and click the 'check stock' button
+
+with this traffic (POST method) intercepted in burp, send to repeater
+
+in repeater, change the stockApi url to localhost/admin and resend
+
+now view the html code for the users 'carlos' and 'wiener', notice the 'href' tag, it appends a '/delete?username=carlos' to the admin url
+
+add this to the 'resquest' bodies url in burp and resend to solve the lab 

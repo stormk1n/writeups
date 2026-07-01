@@ -1,0 +1,23 @@
+Lab04: User role can be modified in user profile
+APPRENTICE
+
+METHOD
+login with the supplied creds
+
+try uploading your email and monitor the response of this request in burp
+
+see the response returned your role id ?
+       {
+  "username": "wiener",
+  "email": "jim@juice-sh.op",
+  "apikey": "q4pL1EE0hyTtBwHcVKvHVHnaBF2GE6nH",
+  "roleid": 1 <<<<<< SET TO 2
+      }
+
+send this request to repeater, change the method from "POST" to "GET" and send this request
+
+looking at the response body, see the "<a href="/admin">Admin panel</a>"
+
+navigate to this panel, where you'll find another interesting url "a href="/admin/delete?username=carlos">Delete</a>"
+
+follow this to complete the lab

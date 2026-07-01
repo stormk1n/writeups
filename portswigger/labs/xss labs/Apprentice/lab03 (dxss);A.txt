@@ -1,0 +1,71 @@
+Lab03: DOM XSS in document.write sink using source location.search
+
+Lv -> APPRENTICE
+
+1) Vuln: DXSS
+
+
+2) Trust Point: search field
+
+FOCUS
+- Source: location.search (data from the URL parameters you control)
+
+- Sink: document.write (dumps data from location.search straight into the HTML and writes during page load)
+
+- Goal: Break out of the img tag and call an event handler 
+
+
+
+3) Assumption:
+The application assumes that data obtained from location.search (URL parameters) is safe to use in DOM manipulation functions like document.write without sanitization or context-aware encoding.
+
+4) Root Cause:
+User data from search field is passed through location.search to document.write sink, writing data unto the page
+
+Take a look at the javascript
+
+  <script>
+       function trackSearch(query) {
+       document.write('<img src="/resources/images/tracker.gif?searchTerms='+query+'">');
+                                   }
+       var query = (new URLSearchParams(window.location.search)).get('search');
+      if(query) {
+            trackSearch(query);
+                 }
+  </script>
+  
+After document.write, the browser receives HTML, not JavaScript. So the input is injected inside an HTML attribute value
+
+we aren't injecting into a <script> context but into an HTML attribute context (unsafe HTML construction via JS sink)
+
+NOTE:
+- <script> inside an attribute value (like <img>) is not considered a script tag but is treated as text. The browser only executes scripts when they are parsed as elements
+
+
+  
+5) Exploit Method:
+Inject a payload via the search parameter that breaks out of the src attribute and introduces a JavaScript event handler.
+
+Example Payload: " onload="alert(1)
+
+
+5.1) How it fell apart
+->The first quotation mark (") at the beginning of the payload closes the <src=""> parameter in the img tag (see vulnerable code above) giving way for us to load javascript
+
+->And the last qoutation mark at the far end of the <src=" "> parameter is used to close up our payload, providing the double qoute needed to close it. Notice we didn't provide one to close it up with.
+
+->Thus we have <img src="'+"payload+'">
+
+->Since single qoutes (') are string delimeters in js, the browser doesn't bother with them as they are taken out after js concatenation
+
+->And so placing our payload we get something like <img src=" "onload="alert('1')">
+
+
+
+6) Impact:
+An attacker can execute arbitrary JavaScript in the victim’s browser by crafting a malicious URL. This can lead to session hijacking, credential theft, DOM manipulation, or unauthorized actions performed on behalf of the user.
+
+
+
+7) Pattern:
+User-controlled data from client-side sources (e.g., location.search, location.hash, document.URL) is directly written to the DOM using unsafe sinks (e.g., document.write) without sanitization, enabling DOM-based XSS.

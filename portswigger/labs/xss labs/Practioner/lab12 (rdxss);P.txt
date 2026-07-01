@@ -1,0 +1,75 @@
+Lab12: Reflected DOM XSS
+
+Lv -> PRACTITIONER
+
+1) Vuln: RDXSS
+
+
+2) Trust Point: search query
+FOCUS
+
+-Source: this.responseText
+
+-Sink: eval()
+
+-Goal: Create an injection that calls the alert() function.
+
+
+
+3) Assumption:
+The application assumes that escaping double quotes (") prevents an attacker from breaking out of a JSON string property value.
+
+
+
+4) Root Cause:
+
+eval('var searchResultsObj = ' + this.responseText);
+
+The client script takes raw asynchronous response text and executes it directly as code.
+The server endpoint generates this text but fails to sanitize backslashes (\).
+
+
+
+4.1) Mental Map:
+Input parameter contains \"
+      ↓
+Server leaves \ raw but escapes " to \"
+      ↓
+JSON output reads \\"
+      ↓
+First \ escapes second \
+      ↓
+Quote " is freed
+      ↓
+eval() hits active code
+      ↓
+alert(1) executes
+
+
+
+5) Exploit Method:
+Inject a backslash to turn the server's structural escape character into a harmless literal backslash, close the string quote early, and attach an executable command via a URL-safe arithmetic operator.
+
+Payload: %5C"-alert(1)}//
+
+
+
+6) Pattern:
+-> Client-side scripts digest data payloads using raw dynamic evaluation execution nodes (eval(), setTimeout(), Function()).
+
+-> The server-side defensive mechanism uses asymmetric sanitization filters that isolate specific delimiters (like quotes) while ignoring secondary components (like backslashes).
+
+-> The web stack passes raw, non-validated strings across context boundaries (Server-to-Client JSON parsing) instead of forcing type-safe processing alternatives like JSON.parse().
+
+
+
+7) HOW TO CONFIRM
+> Tracing input streams from asynchronous background data lookups (XMLHttpRequest, fetch) straight into execution nodes
+
+> Testing boundary string markers (", ') to watch if the server implements structural escaping sequences
+
+> Injecting isolated backslashes (\) to observe if they pass completely raw into the application output template.
+
+> Monitoring developer consoles for syntax termination break failures when feeding uneven quote inputs
+
+> Deploying URL-safe math operators (*, -, /) linked to operational telemetry calls (like console.log) to confirm expression escape execution paths

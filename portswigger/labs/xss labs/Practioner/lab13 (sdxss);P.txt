@@ -1,0 +1,73 @@
+Lab 13: Stored DOM XSS
+
+Lv -> PRACTITIONER
+
+
+1)Vuln: SDXSS
+
+
+2) Trust Point: Blog comment section
+
+Goal: Create an injection that calls alert()
+
+
+3) Assumption:
+The application assumes that replacing the first occurrence of angle brackets (< and >) via standard string methods is sufficient to sanitize HTML input before insertion.
+
+
+
+4) Root Cause:
+function escapeHTML(html) {
+        return html.replace('<', '&lt;').replace('>', '&gt;');
+    }
+
+The client-side JavaScript utilizes the native .replace() string method with string literals instead of a global regular expression (/g). In JavaScript, string.replace('x', 'y') only substitutes the very first instance of the target character, leaving all subsequent pairs of angle brackets completely unmodified and executable.
+
+
+
+4.1) Mental Map:
+Input parameter contains <><img src=x onerror="alert(1)">
+      ↓
+escapeHTML() processes the string
+      ↓
+First '<' becomes '&lt;' and first '>' becomes '&gt;'
+      ↓
+Remaining characters "<img src=x onerror="alert(1)">" left completely raw
+      ↓
+Sanitized string appended to DOM via innerHTML
+      ↓
+Browser parses the unescaped secondary tags
+      ↓
+Broken image element triggers onerror event
+      ↓
+alert(1) executes
+
+
+
+5) Exploit Method:
+Prepend a sacrificial pair of angle brackets to absorb the single-pass filter execution, allowing the functional exploit payload directly behind it to bypass sanitization intact
+
+Payload: <><img src=x onerror="alert(1)">
+
+
+
+6) Pattern:
+-> Client-side scripts utilize non-global string manipulation operations to filter iterative formatting markers.
+
+-> The defensive layer relies on single-pass execution logic which handles initial instances of risk sequences but permits recursive inputs.
+
+-> The web framework translates multi-segmented input streams directly into active DOM structures without native element creation routines like textContent.
+
+
+
+7) HOW TO CONFIRM
+> Tracing database-backed message arrays traversing API streams back into rendering components.
+
+> Testing repeating character markers (<<, >>, <><>) to evaluate structural filter depth limits.
+
+> Injecting multi-token tag arrays to detect if encoding procedures scale globally across the string.
+
+> Monitoring developer element inspectors for structural modifications when handling nested character variations.
+
+> Deploying broken visual asset elements linked to immediate telemetry routines to validate parsing paths.
+

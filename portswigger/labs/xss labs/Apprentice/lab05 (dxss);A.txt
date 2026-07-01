@@ -1,0 +1,80 @@
+Lab05: DOM XSS in jQuery anchor href attribute sink using location.search source
+
+Lv -> APPRENTICE
+
+
+1) Vuln: DXSS
+
+2) Trust Point: ?returnpath= in url query
+
+FOCUS
+-Source: location.search (attacker-controlled URL parameters)
+-Sink: jQuery .attr("href", value) on an anchor element
+- Goal: Craft a payload that can abuse the anchor attribute sink
+
+
+
+3) Assumption:
+The application assumes values supplied through the returnPath URL parameter are safe to place directly into an anchor href attribute without validation or protocol restrictions.
+
+
+
+4) Root Cause
+$(function() {
+  $('#backLink').attr("href", (new URLSearchParams(window.location.search)).get('returnPath'));
+            });
+                        
+
+4.1) Mental Map
+location.search
+        ↓
+URLSearchParams.get('returnPath')
+        ↓
+jQuery .attr("href", value)
+        ↓
+Anchor href becomes attacker-controlled
+
+
+
+5) Exploit Method
+At the submit feedback page, the "?return=" is user controllable
+
+Payload: javascript:alert(document.cookie)
+
+Get version with:
+-JQuery.fn.jquery
+-$.fn.jquery
+-$().jquery
+
+NB
+DOM-based XSS occurs because attacker-controlled data from location.search is written into an anchor href attribute, allowing execution via the javascript: URL scheme.
+
+
+
+6) Impact:
+An attacker can craft a malicious URL that causes arbitrary JavaScript execution when the victim clicks the manipulated link. This may lead to session hijacking, phishing, DOM manipulation, credential theft, or actions performed on behalf of the victim within the application.
+
+
+
+7) Patterns
+This pattern commonly appears in features involving navigation or redirects:
+
+“Back” links
+
+“Return to previous page”
+
+OAuth, return, returnUrl, redirect, redirect_uri, next, back, continue, from, to, 
+
+continue parameters
+
+
+HOW TO CONFIRM
+You confirm by:
+
+>Hovering links
+
+>Inspecting elements
+
+>Watching the DOM change
+
+>Seeing link URLs reflect your input

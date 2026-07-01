@@ -1,0 +1,17 @@
+PRINCIPLE
+Common obstacles to exploiting path traversal vulnerabilities - Continued
+
+You might be able to use nested traversal sequences, such as ....// or ....\/. These revert to simple traversal sequences when the inner sequence is stripped.
+
+
+
+Lab03: File path traversal, traversal sequences stripped non-recursively
+PRACTITIONER
+
+METHOD
+
+Use Burp Suite to intercept and modify a request that fetches a product image.
+Modify the filename parameter, giving it the value:
+
+....//....//....//etc/passwd
+Observe that the response contains the contents of the /etc/passwd file

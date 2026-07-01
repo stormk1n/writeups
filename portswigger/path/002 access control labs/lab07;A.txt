@@ -1,0 +1,19 @@
+Lab07: Insecure direct object references
+APPRENTICE
+
+METHOD
+view the site, visit the "live chat" endpoint with burp intercepting the request in background
+
+send a message, then select "view transcript"
+
+in the request for the message, notice its a "GET /download-transcript/2.txt"
+
+what happens if i change it to "GET /download-transcript/1.txt" 🤔️
+
+with that done, send the request
+
+notice the "You: Ok so my password is jch34041fz0ud5rb6idc. Is that right?" line in the message intercepted ?
+
+with username "carlos" and password "jch34041fz0ud5rb6idc"
+
+login and complete the lab

@@ -1,0 +1,11 @@
+Lab03: SSRF with blacklist-based input filter
+PRACTITIONER
+
+
+Visit the lab and check on the stocks of any product as before
+
+Intercept the request and send to burp
+
+while at burp modify the stockApi parameter value to a http://127.1/%2561dmin
+
+with all set follow the link provided to delete the user carlos an complete the lab

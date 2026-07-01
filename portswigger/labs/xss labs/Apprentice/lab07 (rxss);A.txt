@@ -1,0 +1,85 @@
+Lab07: Reflected XSS into attribute with angle brackets HTML-encoded
+
+Lv -> APPRENTICE
+
+
+1) Vuln: RXSS
+
+2) Trust Point: Search field
+FOCUS
+-Reflected Point: HTML input element attribute value (<input --- value="stormk1n">)
+
+-Goal: Inject a malicious event handler attribute into an existing HTML element to execute JavaScript without using angle bracket
+
+
+3) Assumption:
+The application assumes that HTML encoding angle brackets (< and >) is sufficient to prevent all forms of Cross-Site Scripting.
+
+Additionally, the developer assumes that as long as an attacker cannot introduce new HTML tags, input reflected inside an existing element's attribute string will remain harmless text data and cannot break out of its boundary quotes.
+
+
+
+4) Root Cause:
+<input type=text placeholder='Search the blog...' name=search value="YOUR_INPUT_HERE">
+
+Server-side template engine reflects user input directly inside the attribute quotes without escaping or encoding the quote character itself
+
+
+
+4.1) Mental Map:
+HTTP search parameter
+      ↓
+Application encodes < and >
+      ↓
+Reflected into value="..." attribute
+      ↓
+Attacker injects double quote (")
+      ↓
+Attribute boundary breaks
+      ↓
+Application interprets input as new attribute
+      ↓
+User interaction (e.g., mouse movement)
+      ↓
+Event handler executes JavaScript
+
+
+
+5) Exploit Method:
+Inject a malicious payload into the search input field to break the attribute boundary and insert an executable event listener.
+
+Payload: " onmouseover="alert(1)
+
+notable event handlers: onfocus+autofocus, onclick, 
+
+
+
+6) Impact:
+An attacker can execute arbitrary JavaScript in the victim's browser context by convincing them to click a link and engage with the target page element.
+
+This may lead to:
+-Session hijacking and session token extraction
+-Unauthorized DOM manipulation and content defacement
+-Phishing overlays designed to capture user credentials
+-Forced state-changing requests executed on behalf of the victim
+
+
+
+7) Pattern:
+This pattern occurs when:
+-> Attacker-controlled input is reflected inline inside HTML element attribute pairs (value, href, src, name).
+
+-> Sanitization filters rely exclusively on denying specific characters (like < and >) instead of enforcing contextual output encoding.
+
+-> The application fails to neutralize delimiter characters (" or ') that define the structural boundaries of the hosting attribute string.
+
+
+
+HOW TO CONFIRM
+You confirm by:
+>Submitting a unique alphanumeric test string to locate reflection points
+>Inspecting the DOM source to see if reflection happens inside an attribute value
+>Testing double quote characters (") to see if they render raw or are converted to &quot;
+>Observing if the attribute string structure breaks visually in DevTools
+>Injecting harmless attributes (like class="test") to verify parser structural modification
+>Triggering JavaScript execution via standard mouse/focus event handlers (onmouseover, onfocus)

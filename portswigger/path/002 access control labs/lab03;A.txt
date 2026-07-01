@@ -1,0 +1,9 @@
+Lab03: User role controlled by request parameter
+APPRENTICE
+
+METHOD
+First, login with your credentials
+
+In the "Application" tab of dev tools, change the value of the "Admin" cookie from "false" to "true"
+
+Hit enter, reload the page and complete the lab

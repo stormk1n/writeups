@@ -1,0 +1,14 @@
+Lab: SSRF with filter bypass via open redirection vulnerability
+PRACTITIONER 
+
+View the stocks of a product and intercept the request in burpt
+
+now click on <NextProduct>
+
+the new url pattern becomes something like /product/stock?currentProductId=1&path=/product?productId=2 for the second product
+
+take a good look at the path=/ in the url of product 2
+
+use the product for the exploit
+
+Now manually add stockApi to the request and set it's value to /product/nextProduct?path=http://192.168.0.12:8080/admin/delete?username=carlos
