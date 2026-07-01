@@ -1,4 +1,4 @@
-SQLI
+Vulnerability: SQLI
 
 To get the second flag, notice the way the webpage calls all this index pages
 
