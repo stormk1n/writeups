@@ -14,7 +14,7 @@ function chooseTab(num) {
   $('#tabContent').html(html);
 }
 
-the <+num+> is where your input goes
+the <+num+> is where our input goes
 
 
 
@@ -38,14 +38,12 @@ From this line:
 html += "<img src='/static/level3/cloud" + num + ".jpg' />";
 
 
-If your input is 3, it builds:
+If our input is 3, it builds:
 
 <img src='/static/level3/cloud3.jpg' />
 
 
-BUT if your input is something malicious, like:
+BUT if our input is something malicious, like ' onerror='alert(1) it builds:
 
-<img src='' onerror="alert('1')">
+<img src='' onerror='alert(1)'>
 
-also, note the ' at src ?
-Do not use " for src
