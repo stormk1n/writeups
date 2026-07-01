@@ -1,0 +1,35 @@
+LAB: BASIC IDOR IN COOKIE
+
+1) Vuln
+->Primary: Broken Access Control
+->Subtype: Client-side privilege escalation (tampered cookie)
+->Related: Insecure deserialization / no integrity check
+
+
+2) Trust point: User identity and role are fully controlled by client (userDataBase64)
+
+
+3) Assumption: Cookie data is trusted and not modified by the client
+
+
+4) Root Cause
+userDataJSON = base64.b64decode(userDataBase64)
+userData = json.loads(userDataJSON)
+
+4.1) Access flaw
+if userData["role"] == "admin":
+
+→ Authorization decision based solely on client input
+
+
+5) Exploit method
+input {"user":"username", "role":"admin"}
+
+where username could be anything
+
+
+6) Impact: Unauthorized access to admin functionality (flag disclosure)
+
+
+7) Pattern
+Client-stored identity data without integrity protection can be modified to escalate privileges

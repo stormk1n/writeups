@@ -1,0 +1,46 @@
+LAB: BASIC IDOR WITH HASH AS USER IDENTIFIER
+
+1) Vuln
+->Primary: IDOR
+->Subtype: Predictable identifier / enumerable ID
+->Related: Broken Access Control (No authorization check when accessing user objects via hashId)
+
+
+2) Trust point: user supplied hash ID
+
+
+3) Assumption: hashId is unguessable and maps to a valid user
+
+
+4) Root cause:
+
+function makeHashID($username, $id) {
+    return md5($username . $id);
+}
+$hashId = makeHashID("guest", count($users));
+
+4.1)s Logic
+
+hashId = md5(username + predictable index)
+→ No randomness, no secret input → fully reproducible by attacker
+
+4.2) Access flaw
+
+$users[$hashId]
+
+→ No authorization check on object access
+
+
+5) Exploit Method:
+Generated md5("admin1") → e00cf25ad42683b3df678c61f42c6bda, with echo -n "admin1" | md5sum
+And passed as hashId
+
+username=admin index=1
+
+
+6) Impact: Access to admin user data (possible secret/flag)
+
+
+7) Patterns
+Deterministic identifiers derived from predictable inputs (e.g., username + counter)
+can be enumerated and used to bypass access controls if not validated server-side
