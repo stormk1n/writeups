@@ -1,3 +1,5 @@
+Vulnerability: XSS
+
 To get the final flag we can use the 
 <iframe onload="alert('1')"></iframe>
 or
