@@ -1,7 +1,7 @@
 https://xss-game.appspot.com/level2
 
 
-You need to use an HTML element (like <img>, <a>, or <div>) with a JavaScript event attribute, like:
+we need to use an HTML element (like <img>, <a>, or <div>) with a JavaScript event attribute, like:
 
 <img src="x" onerror="alert('XSS')">
 
@@ -14,7 +14,7 @@ onerror runs your JavaScript: alert('xss')
 
 
 
-You're learning that XSS isn’t just:
+ XSS isn’t just:
 
 <script>badStuff()</script>
 
