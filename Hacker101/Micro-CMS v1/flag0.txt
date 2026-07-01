@@ -1,4 +1,4 @@
-Broken Access Control
+Vulnerability: BAC
 
 To obtain the first flag, create a new page provide all the editing needed, now go to the home page
 
