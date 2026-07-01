@@ -21,12 +21,10 @@ So, if you input 5, it becomes:
 
 <img src="/static/loading.gif" onload="startTimer('5');" />
 
-✅ That’s valid JavaScript.
+And that is valid JavaScript.
 
 
 But what if you input something that breaks out of the string?
-
-🔥 The XSS Attack Idea
 
 Let’s say we pass this:
 
@@ -46,7 +44,7 @@ https://xss-game.appspot.com/level4/frame?timer=');alert(1);//
 
 
 
-🎯 JavaScript gets broken into:
+JavaScript gets broken into:
 
 startTimer('');
 
@@ -54,4 +52,4 @@ alert(1);
 
 //'); (commented out to avoid syntax error)
 
-✅ Payload executed!
+Payload executed!
