@@ -10,11 +10,11 @@ we need to use an HTML element (like <img>, <a>, or <div>) with a JavaScript eve
 
 That causes an error
 
-onerror runs your JavaScript: alert('xss') 
+onerror runs our JavaScript: alert('xss') 
 
 
 
- XSS isn’t just:
+XSS isn’t just:
 
 <script>badStuff()</script>
 
