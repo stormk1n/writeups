@@ -1,0 +1,5 @@
+To obtain the first flag, create a new page provide all the editing needed, now go to the home page
+
+Notice how this page is being referenced (Hover over it and see the full url)
+
+It skips from page/2 to page/12, what happened to all the numbers 3-11 within this range ?

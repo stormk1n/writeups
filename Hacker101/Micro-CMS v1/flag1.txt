@@ -1,0 +1,7 @@
+To get the second flag, notice the way the webpage calls all this index pages
+
+it calls 1, then 2, and so on
+
+Append a ' to the /page/edit/ this breaks the sqli syntax
+
+Note query strings are not the only way for data to be referenced in the backend

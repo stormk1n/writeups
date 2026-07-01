@@ -1,0 +1,9 @@
+With the request being captured in burp notice, the cookie value bieng sent as the "id" parameter
+
+Take a closer look at this, it is actually an md5 encryption for your user_id
+
+So, if we take an md5 encryption of the number 1 and replay in our request, we get the admin account and thus the flag
+
+Also, for the encryption process, I used cyberchef, non the less the command "echo -n 1 | md5sum" should yield equal result
+
+Using this same procedure with the value 2, we get Flag0 for this particular challenge

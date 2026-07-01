@@ -1,0 +1,9 @@
+Just like with flag2, we intercept a request to delete a post this time around
+
+Notice the endpoint looks something like ?page=delete.php&id=<md5_hash_of_postid>
+
+Make an encryption of any value withing the range of available post
+
+Place this new md5 into the id parameter of the delete.php endpoint
+
+Resend the request and gain the flag in the redirect response header 

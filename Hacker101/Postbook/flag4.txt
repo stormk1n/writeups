@@ -1,0 +1,8 @@
+We found a flag (flag1) by changing the id parameter of what we could see to find a supposed to be private post
+
+Now, as before create a post and try editing it
+
+Notice once more that the url has an id parameter
+
+change this once more to 2 to edit a private post and save it to get the flag
+

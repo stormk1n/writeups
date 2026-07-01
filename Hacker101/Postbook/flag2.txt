@@ -1,0 +1,7 @@
+Intercept a request to create a post using a proxy tool of your choice
+
+Looking at the request body, notice it makes a request as body=<something>&return=<something>&user_id=3 <<< if you used the create post option available on the home page or it will make a request as title=<something>&body=<something>&user_id=3 <<< if you used the "write a new post" link
+
+With this request sent to repeater change the user_id field to 1 for any of the above request made and resend it to log into the admin account
+
+There should be a 302 response with the flag in the response header

