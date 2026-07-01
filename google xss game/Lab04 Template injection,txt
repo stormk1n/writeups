@@ -17,14 +17,14 @@ https://xss-game.appspot.com/level4
 
 Let’s assume {{ timer }} is replaced with user input.
 
-So, if you input 5, it becomes:
+So, if we input 5, it becomes:
 
 <img src="/static/loading.gif" onload="startTimer('5');" />
 
 And that is valid JavaScript.
 
 
-But what if you input something that breaks out of the string?
+But what if we input something that breaks out of the string?
 
 Let’s say we pass this:
 
@@ -53,3 +53,4 @@ alert(1);
 //'); (commented out to avoid syntax error)
 
 Payload executed!
+
