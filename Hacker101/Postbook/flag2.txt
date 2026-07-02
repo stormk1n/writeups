@@ -1,3 +1,5 @@
+Vulnerability: IDOR
+
 Intercept a request to create a post using a proxy tool of your choice
 
 Looking at the request body, notice it makes a request as body=<something>&return=<something>&user_id=3 <<< if you used the create post option available on the home page or it will make a request as title=<something>&body=<something>&user_id=3 <<< if you used the "write a new post" link
