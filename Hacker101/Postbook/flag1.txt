@@ -1,4 +1,4 @@
-IDOR
+Vulnerability: IDOR
 
 After creating and signing into your account, view any post displayed by clicking on any of the "Hello ....." messages
 
