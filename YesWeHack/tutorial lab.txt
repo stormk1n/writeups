@@ -3,7 +3,7 @@ LAB: Tutorial, SQLite3
 Vuln Type: slqi
 
 Trusted point: goal and title;
-The application trusted that user input could safely be embedded into a SQL VALUES clause after superficial filtering (regex + numeric checks), without enforcing structure or using parameterization.
+The application trusted that the users input could be safely embedded into a SQL VALUES clause after superficial filtering (regex + numeric checks), without enforcing structure or using parameterization.
 
 
 METHOD
