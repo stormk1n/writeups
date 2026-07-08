@@ -19,7 +19,7 @@ function makeHashID($username, $id) {
 }
 $hashId = makeHashID("guest", count($users));
 
-4.1)s Logic
+4.1) Logic
 
 hashId = md5(username + predictable index)
 → No randomness, no secret input → fully reproducible by attacker
