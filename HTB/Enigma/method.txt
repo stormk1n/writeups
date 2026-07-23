@@ -24,11 +24,11 @@ find the poc here https://github.com/b0ySie7e/OpenSTAManager-RCE-Exploit-CVE-202
 
 Once remote access is obtain, see the users found in /home directory
 
-Now, back on the openSTAManager, use the backup functionality and create a full back, within this full backup
+Now, back on the openSTAManager, use the backup functionality and create a full back
 
-Inside this backup, there's a database.sql (open with any text editor) and search for user hashes (users in /home)
+Inside this backup, a database.sql (open with any text editor or use sqlite3) and search for user hashes (usernames found in /home)
 
-Crack the found hash using; john ./hash_file_name.txt (or any cracking hash)
+Crack the found hash using; john ./hash_file_name.txt (or any cracking hash tool)
 
 Back on the RCE terminal, Use 'su <user>' and provide their password to login, the user flag is found in this users home directory
 
