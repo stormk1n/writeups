@@ -19,7 +19,7 @@ curl -s --url "imaps://Targetip" --user "username2:password" -k
 
 Read through this users inbox, to find yet another vhost on the target ip
 
-Go to this newly discovered vhost and login, said vhost runs openSTAManager v2.9.8, which is vulnerable to CVE-2026-38751,
+Going to this newly discovered vhost and logging in, it runs openSTAManager v2.9.8, which is vulnerable to CVE-2026-38751,
 find the poc here https://github.com/b0ySie7e/OpenSTAManager-RCE-Exploit-CVE-2026-38751
 
 Once remote access is obtain, see the users found in /home directory
