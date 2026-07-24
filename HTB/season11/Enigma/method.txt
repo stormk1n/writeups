@@ -25,20 +25,20 @@ And the POC here https://github.com/b0ySie7e/OpenSTAManager-RCE-Exploit-CVE-2026
 
 Once remote access is obtain, see the users found in /home directory
 
-Now, back on the openSTAManager, use the backup functionality and create a full back, within this full backup
+Now, back on the openSTAManager, use the backup functionality and create a full backup.
 
-Inside this backup, there's a database.sql (open with any text editor) and search for user hashes (users in /home)
+Inside this backup, find database.sql (open with any text editor, or sqlite3) and search for user hashes (user in /home)
 
 Crack the found hash using; john ./hash_file_name.txt (or any cracking hash)
 
-Back on the RCE terminal, Use 'su <user>' and provide their password to login, the user flag is found in this users home directory
+Back on the RCE terminal, Use 'su <username>' and provide their password to login, the user flag is found in this users home directory
 
 
 
 ROOT
 use ssh-keygen -t ed25519 -f ~/.ssh/haris_ssh -N "" to generate a public key for haris (On the attack box)
 
-make an .ssh folder for haris (on the target box) at /home/haris and place the public key created above into the authorized_keys and chmod for the .ssh folder and authorized_keys file
+make an .ssh folder for haris (on the target box) at /home/haris and place the public key created above, into the authorized_keys and chmod for the .ssh folder and authorized_keys file
 
 using
 mkdir /home/haris/.ssh
@@ -55,7 +55,7 @@ chown -R haris:haris /home/haris/.ssh
 once done, ssh into the machine with no creds using;
 ssh -i ./haris_ssh -o IdentitiesOnly=yes haris@targetIp
 
-the OliveTin service running on 127.0.0.1:1337 is missconfigured, and thus allows for code execution
+the OliveTin service running on 127.0.0.1:1337 is vulnerable to code injection as db_pass can be broken out off.
 
 (
 line 261 to 263 of the /etc/OliveTin/config.yaml file
