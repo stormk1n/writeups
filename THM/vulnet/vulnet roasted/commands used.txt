@@ -1,0 +1,7 @@
+smbmap -u anonymous -H <ip>
+or
+enum4linux -u vulnnet-rst.local\\guest -a <ip>
+or
+crackmapexec smb <ip> -u guest -p "" --shares
+
+netexec smb <ip> -u 'a' -p '' -d 'vulnnet-rst.local' --rid-brute
