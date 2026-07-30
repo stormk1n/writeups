@@ -1,0 +1,37 @@
+1) Tracking down the AWS mechanism
+
+on the web app, dump the aws creds with;
+console.log(
+"AccessKeyID:", AWS.config.credentials.accessKeyId,
+"\n\nSecretAccessKey:", AWS.config.credentials.secretAccessKey,
+"\n\nSessionToken:", AWS.config.credentials.sessionToken,
+"\n\nRegion:", AWS.config.region
+)
+
+using; aws configure, pass in the creds obtained from the above command
+
+We don't have permission to view the dynamodb tables.
+
+Taking a look at the network tab, we see
+a POST request to dynamodb.us-east-1.amazonaws.com
+
+Checking the payload body we find an accessible table named "complimentary-GuestWellnessProfiles"
+
+
+Note:
+Take a quick look at the app.js source code to understand how sessions are mannaged on the webapp
+
+
+2) Dumping more than our own record
+
+Now, we try reading the table we found, using;
+aws dynamodb scan --table-name complimentary-GuestWellnessProfiles
+
+
+
+
+3) Finding the flag
+
+With the dynamodb content dumped, find a guest_id value and replace byteLotusGuestId (in localstorage) with this id to get the flag
+
+
