@@ -6,7 +6,7 @@ Apparently, this php version is vulnerable to RCE via the "User-Agent" request p
 
 You can find the exploit here 👉🏼️ "https://www.exploit-db.com/exploits/49933" on exploit db
 
-Run the exploit using "python 49933.py" and supply the machine url as ask by the exploit
+Run the exploit using "python 49933.py" and supply the machine url
 
 Now, you get a nice shell which though the directory we are in can't be changed as this is a shell over an http port and is affected by one of the following;
 >Runs in a new process
