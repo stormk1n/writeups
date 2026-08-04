@@ -1,9 +1,13 @@
-Lab: 2FA broken logic
+# Lab: 2FA broken logic
 PRACTITIONER
+<br>
+<br>
 
 # THEORY
 Sometimes flawed logic in two-factor authentication means that after a user has completed the initial login step, the website doesn't adequately verify that the same user is completing the second step. 
-
+<br>
+<br>
+<br>
 
 # METHOD
 
@@ -47,4 +51,6 @@ This should return the code needed to login as carlos
 Intercept the POST /login2 request (turn on intercept) and change the verify paramater to carlos, set the mfa-code to that obtained earlier, then forward the request
 
 We should be logged in as the user carlos
-
+<br>
+<br>
+<br>
