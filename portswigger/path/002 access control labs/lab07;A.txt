@@ -8,7 +8,7 @@ send a message, then select "view transcript"
 
 in the request for the message, notice its a "GET /download-transcript/2.txt"
 
-what happens if i change it to "GET /download-transcript/1.txt" 🤔️
+what happens if i change it to "GET /download-transcript/1.txt"
 
 with that done, send the request
 
