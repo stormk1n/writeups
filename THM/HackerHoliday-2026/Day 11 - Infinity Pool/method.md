@@ -58,7 +58,7 @@ chisel server -p 8080 --reverse
 ```
 To bind local services on the target machine back to ours
 
-Curling http://127.0.0.1:3000 while on the target box, we find
+Curling `http://127.0.0.1:3000` while on the target box, we find
 ```
 /api/health
 /api/config
@@ -85,7 +85,7 @@ with that, map another chisel instance on 127.0.0.1:9000 in the target box to ou
 ```
 Now, open burp and use open browser
 
-Navigate to http://127.0.0.1:9000 and add the headers
+Navigate to `http://127.0.0.1:9000` and add the headers
 ```
 Authorization: Bearer cc_auto_7b3f9a1c4e0d2f6a
 Content-Type: application/json
