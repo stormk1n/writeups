@@ -4,7 +4,6 @@ Download the attachement file and unzip with
 ```bash
 unzip attachments-1784136288483.zip
 ```
-This lab shows up a classic THM forensic challenge
 
 # Crafting our extraction tool
 After analyzing the file OBJECTS.DATAs, we Write a little bash script to do our dirty work
