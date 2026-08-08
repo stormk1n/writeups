@@ -7,8 +7,8 @@ pwshLder=$(strings OBJECTS.DATA | grep "JAB" | sed -E 's/.*-enc\s+//' | sort -u 
 
 printf "[+] Powershell Loader \n\n $pwshLder\n\n"
 
-# using python zlib with a window size of '-15' to force the decompression 
-# of a raw headerless .NET DeflateStream, saving the output as an executable binary.
+# using python zlib with a window size of '-15' to force decompression
+# of a raw headerless .NET DeflateStream (7VZ**** encoded string), saving the output as an executable binary.
 payloadBinfile=$(strings OBJECTS.DATA | grep "7VZ"  | base64 -d | python3 -c "import sys, zlib; sys.stdout.buffer.write(zlib.decompress(sys.stdin.buffer.read(), -15))" > payload.bin)
 
 file=$(file payload.bin)
