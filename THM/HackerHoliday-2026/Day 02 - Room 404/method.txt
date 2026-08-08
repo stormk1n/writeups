@@ -1,5 +1,0 @@
-Do directory enumeration
-
-use git-dumper (install with pipx install git-dumper) to reconstruct the publicly accessible git folder using;
-
-git-dumper http://machineIP:8080/ ./gitDumper

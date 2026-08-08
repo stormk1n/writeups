@@ -1,4 +1,0 @@
-barney:d1ad7c0a3805955a35eb260dab4180dd
-fred:
-root:flintstonesvitamins
-     a00a12aad6b7c16bf07032bd05a31d56 <<< MD5 hash
