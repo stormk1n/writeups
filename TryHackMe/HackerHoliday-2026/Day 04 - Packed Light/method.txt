@@ -1,0 +1,21 @@
+1) Analyzing the pcap file
+
+Download the pcapng file and open with wireshark
+
+Sort the captures by protocols stack
+
+
+
+2) Identifying exfiltration point
+
+Notice the HTTP GET request to /tmp/updates.py (request size 482; response size 1140)
+
+Copy out the python code snippet from the response. Reading the script carefully, see the way cookie values are created?
+
+
+
+3) Getting the flag
+
+Reverse engineer the code and obtain the flag
+
+using the revEnc.py created, pass in a file called cookies.txt
