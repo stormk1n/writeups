@@ -13,7 +13,7 @@ use the 4r3nz1c.sh script to get the flag as
 chmod +x ./4r3nz1c.sh \
 ./4z3nzic.sh
 ```
-Room flag
+Last line should contain the flag
 ```
 [+] R00M Fl4g :
  THM{===---==--//--===--:)-==}
