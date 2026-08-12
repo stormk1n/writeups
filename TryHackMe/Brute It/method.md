@@ -1,5 +1,5 @@
 # Accessing the admin port
-At http://bruteit.thm/admin <-- Added to /etc/hosts
+At `http://bruteit.thm/admin` <-- Added to /etc/hosts
 
 Bruteforce the login page with
 ```bash
