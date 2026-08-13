@@ -34,7 +34,10 @@ steghide extract -sf oneforall.jpg
 ```
 
 ## Getting the user flag
-ssh unto the system as deku, flag in deku's home dir
+ssh unto the system as deku, flag at
+```
+/home/deku/user.txt
+```
 
 
 ## Gaining root
