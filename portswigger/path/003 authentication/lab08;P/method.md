@@ -15,7 +15,7 @@ Some websites assume that if the cookie is encrypted in some way it will not be 
 
 ### METHOD
 
-First sign into the provided account and study the "stay-logged-in" cookie
+First sign in with the provided account and study the "stay-logged-in" cookie
 
 Notice anything?
 
@@ -35,7 +35,7 @@ while IFS= read -r lne; do
   echo "$togthr"
 done < "$file"
 ```
-Along with the provided password-list as argument, converting it to base64 with
+Along with the results of the above as argument, converting it to base64 with
 ```bash
 #!/bin/env bash
 file2=$1
