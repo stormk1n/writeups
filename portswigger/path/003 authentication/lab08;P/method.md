@@ -1,7 +1,7 @@
 # Lab08: Brute-forcing a stay-logged-in cookie
 PRACTITIONER
-
-
+<br>
+<br>
 ### THEORY
 A common feature is the option to stay logged in even after closing a browser session. This is usually a simple checkbox labeled something like "Remember me" or "Keep me logged in".
 
