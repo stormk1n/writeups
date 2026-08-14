@@ -1,6 +1,5 @@
 # Lab08: Brute-forcing a stay-logged-in cookie
-
-## PRACTITIONER
+PRACTITIONER
 
 
 ### THEORY
