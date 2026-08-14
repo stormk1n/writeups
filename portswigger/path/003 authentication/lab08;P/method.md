@@ -8,10 +8,8 @@ A common feature is the option to stay logged in even after closing a browser se
 This functionality is often implemented by generating a "remember me" token of some kind, which is then stored in a persistent cookie.
 
 Some websites assume that if the cookie is encrypted in some way it will not be guessable even if it does use static values. While this may be true if done correctly, naively "encrypting" the cookie using a simple two-way encoding like Base64 offers no protection whatsoever.
-
-
-
-
+<br>
+<br>
 ### METHOD
 
 First sign in with the provided account and study the "stay-logged-in" cookie
