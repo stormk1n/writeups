@@ -1,4 +1,4 @@
-# PaperWork [HTB BOX](https://hackthebox.com/machines/Paperwork)
+# [PaperWork on HTB](https://hackthebox.com/machines/Paperwork)
 
 ## Initial Foothold
 
@@ -60,7 +60,8 @@ Supply the necessary parameters and run the script with a listener waiting.
 Once the shell is gained, we should be logged in as the lp user (Line printer).
 
 Further enumeration confirms that our lp user is of the lowest privileges, proceeding with lateral movement
-
+<br>
+<br>
 
 ## Lateral movement
 We discover a user 'archivist' by running ls against the home directory and a process running as this user with ps aux
@@ -89,6 +90,10 @@ try: s.recv(400)
 except: pass
 s.close()
 ```
+<br>
+<br>
+
+## Gaining root
 Logged in as archivist, we discover a daemon running as root
 ```
 python3 /usr/bin/paperwork-daemon
@@ -185,3 +190,5 @@ Watch
 https://youtu.be/1UHaR54i3ak
 ```
 For linux sockets basics
+
+
