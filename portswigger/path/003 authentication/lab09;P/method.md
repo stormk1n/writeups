@@ -1,5 +1,5 @@
 # Lab: Offline password cracking
-### PRACTITIONER
+#### Lv: PRACTITIONER
 
 ## THEORY
 In some rare cases, it may be possible to obtain a user's actual password in cleartext from a cookie, even if it is hashed.
