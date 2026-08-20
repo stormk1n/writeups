@@ -1,4 +1,4 @@
-METHOD
+# Initial access
 
 first, setup netcat with: nc <ip_addr> <target_port(eg: 9009)>
 or
@@ -7,7 +7,7 @@ use telnet as:
 telnet <ip_addr> <target_port(eg: 9009)>
 ```
 
-now, type; "cert, key, and help" for more info (also save the cert obtained to a file)
+now, type; "cert, key, and help" for more info (also, save the cert obtained to a file)
 
 
 Once done, try connecting using:
@@ -25,14 +25,12 @@ openssl s_client -connect <ip_addr>:54321 -cert ./cert.crt -key ./key.key <<<< j
           - openssl x509 -in key.key -noout -text
 -->
           
-After using socat, type; "hints, password(s)" to get the username + passwd hint
+After using socat, type; "hints, password(s)" to get the username + passwd.
+
+Now login through the ssh port with the name barney and the passwd.
 
 
-now, use either "hashid" or "hash-identifier" or "hashcat" plus <hash> obtianed to waste small time checking what type of hash it is
-
-But after wasting like an hour of you're time, you realized that, the password wasn't hashed at all, DAMN!
-
-now login through the ssh port with the name barney and the soo thought hashed passwd
+# Going horizontal
 
 Once logged in, use "sudo -l" to see avaliable prives
 
@@ -46,14 +44,14 @@ sudo /usr/bin/certutil [username] [full_name]
             username=fred
             fullname="Fred Flintstone"
 ```
-set these inorder to have a cert and a key for fred
+set these inorder to have a cert and a key for fred.
 
-now, use socat with freds key and cert to get a hint about his password
+Use socat with freds key and cert to get a hint about his password
 
+
+# Gaining root
 
 With all those obtained, get the user flag, and use "sudo -l" within fred's session and see what you can execute
-
-run a
 ```
 sudo base64 /root/pass.txt
 ```
