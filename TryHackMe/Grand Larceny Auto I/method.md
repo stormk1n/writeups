@@ -44,6 +44,7 @@ public void EscalateHeat(int amount)
 }
 ```
 The max stars available is 5, but in
+
 FILE: SafehouseVault.cs we find
 ```
 public string TryOpen()
@@ -60,6 +61,7 @@ public string TryOpen()
 ```
 Trying to open the safe vault once our heat level reaches 6.
 Now looking at
+
 FILE: PlayerState.cs which we find
 ```
 namespace GrandLarcenyAuto;
@@ -75,6 +77,7 @@ The state of the player can also be set, sounds 'enteresting', what if we can hi
 First, in order to hijack this at runtime, we need dotnet (specifically dotnet 8)
 
 WHY? MATE, READ THROUGH THE FILES, IT AIN'T EASY
+
 FILE: GrandLarcenyAuto.csproj
 ```
 <PropertyGroup>
