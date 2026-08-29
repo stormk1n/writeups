@@ -113,7 +113,7 @@ In it, we find 'DNGLA.csproj' and 'Program.cs'.
 Inside DNGLA.csproj, add a local assembly reference pointing to the GrandLarcenyAuto.dll file, leaving the rest unmodified
 ```
 <ItemGroup>
-  <Reference Include=GrandLarcenyAuto">
+  <Reference Include="GrandLarcenyAuto">
     <HintPath>../GrandLarcenyAuto-windows/data_GrandLarcenyAuto_windows_x86_64/GrandLarcenyAuto.dll</HintPath>
   </Reference>
 </ItemGroup>
