@@ -27,13 +27,13 @@ Now, in in the glaRev folder, we can find the games source code written in c#.
 Reading through the scripts in the recovered code, we find
 
 FILE: GameController.cs
-```
+```c#
 THE VAULT SWINGS OPEN\n\nSix stars. All you had to ****>etc
 ```
 Telling us something about six stars, but thats funny cause
 
 FILE: WantedSystem.cs says
-```
+```c#
 private const int MaxStars = 5;
 public void EscalateHeat(int amount)
 {
@@ -48,7 +48,7 @@ public void EscalateHeat(int amount)
 The max stars available is 5, but in
 
 FILE: SafehouseVault.cs we find
-```
+```c#
 public string TryOpen()
 {
     if (player.WantedStars >= 6)
@@ -65,7 +65,7 @@ Trying to open the safe vault once our heat level reaches 6.
 Now looking at
 
 FILE: PlayerState.cs which we find
-```
+```c#
 namespace GrandLarcenyAuto;
 public class PlayerState
 {
@@ -81,7 +81,7 @@ First, in order to hijack this at runtime, we need dotnet (specifically dotnet 8
 WHY?
 
 FILE: GrandLarcenyAuto.csproj
-```
+```c#
 <PropertyGroup>
   <AssemblyName>GrandLarcenyAuto</AssemblyName>
   <EnableDynamicLoading>True</EnableDynamicLoading>
@@ -111,7 +111,7 @@ dotnet new console -n <CNSL NAME eg DnGla> && cd DnGla
 In it, we find 'DnGla.csproj' and 'Program.cs'.
 
 Inside DnGla.csproj, add a local assembly reference pointing to the GrandLarcenyAuto.dll file, leaving the rest unmodified
-```
+```c#
 <ItemGroup>
   <Reference Include="GrandLarcenyAuto">
     <HintPath>../GrandLarcenyAuto-windows/data_GrandLarcenyAuto_windows_x86_64/GrandLarcenyAuto.dll</HintPath>
@@ -119,7 +119,7 @@ Inside DnGla.csproj, add a local assembly reference pointing to the GrandLarceny
 </ItemGroup>
 ```
 Once done, we update progrma.cs with our actual hijack code (replace the code blocks in it with)
-```
+```c#
 using System;
 using GrandLarcenyAuto;
 
