@@ -106,11 +106,11 @@ Knowing that we can hijack the game, we create our own version of the vault decr
 
 First, create a new net console to interact with the game using
 ```
-dotnet new console -n <CNSL NAME eg DNGLA> && cd DNGLA
+dotnet new console -n <CNSL NAME eg DnGla> && cd DnGla
 ```
-In it, we find 'DNGLA.csproj' and 'Program.cs'.
+In it, we find 'DnGla.csproj' and 'Program.cs'.
 
-Inside DNGLA.csproj, add a local assembly reference pointing to the GrandLarcenyAuto.dll file, leaving the rest unmodified
+Inside DnGla.csproj, add a local assembly reference pointing to the GrandLarcenyAuto.dll file, leaving the rest unmodified
 ```
 <ItemGroup>
   <Reference Include="GrandLarcenyAuto">
@@ -123,7 +123,7 @@ Once done, we update progrma.cs with our actual hijack code (replace the code bl
 using System;
 using GrandLarcenyAuto;
 
-namespace DNGLA
+namespace DnGla
 {
   class Program
   {
