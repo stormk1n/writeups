@@ -1,7 +1,7 @@
 ﻿using System;
 using GrandLarcenyAuto;
 
-namespace DNGLA
+namespace DnGla
 {
   class Program
   {
