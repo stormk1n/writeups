@@ -22,14 +22,16 @@ mkdir ../glaRev \
 ./gdre_tool.x86_64 --headless --recover=../GrandLarcenyAuto-windows/GrandLarcenyAuto.pck --output=../glaRev \
 cd ../glaRev
 ```
-Now, in in the glaRev folder, we can find the games source code which is now readable.
+Now, in in the glaRev folder, we can find the games source code written in c#.
 
 Reading through the scripts in the recovered code, we find
+
 FILE: GameController.cs
 ```
 THE VAULT SWINGS OPEN\n\nSix stars. All you had to ****>etc
 ```
 Telling us something about six stars, but thats funny cause
+
 FILE: WantedSystem.cs says
 ```
 private const int MaxStars = 5;
@@ -70,13 +72,13 @@ public class PlayerState
     public int WantedStars { get; set; }
 }
 ```
-The state of the player can also be set, sounds 'enteresting', what if we can hijack it and set our value (6 or try 100 4 da fun of it)
+The state of the player can also be set, sounds interesting, what if we can hijack it and set our value (6 or try 100 for da fun of it)
 
 # Planning the hijack, gonna be a big heist
 
 First, in order to hijack this at runtime, we need dotnet (specifically dotnet 8)
 
-WHY? MATE, READ THROUGH THE FILES, IT AIN'T EASY
+WHY?
 
 FILE: GrandLarcenyAuto.csproj
 ```
@@ -100,9 +102,9 @@ mkdir -p $HOME/dotnet && tar zxf dotnet-sdk-8.0.424-linux-x64.tar.gz -C $HOME/do
 export DOTNET_ROOT=$HOME/dotnet
 export PATH=$PATH:$HOME/dotnet
 ```
-Knowing that we can hijack the game, we create our own version of the vault decryption with dotnet's aid.
+Knowing that we can hijack the game, we create our own version of the vault decryption in c# using dotnet-sdk.
 
-First, create a new net console to interact with our game with
+First, create a new net console to interact with the game using
 ```
 dotnet new console -n <CNSL NAME eg DNGLA> && cd DNGLA
 ```
