@@ -12,7 +12,7 @@ import requests
 
 host = input("Target url> ")
 req = requests.Session()
-res = request.get(hot)
+res = request.get(host)
 
 
 if str(res) == "<Response [200]>":
