@@ -1,8 +1,11 @@
 Lab03: Username enumeration via subtly different responses
+
 PRACTITIONER
+<br>
+<br>
 
 
-
+# Method
 Send a login request to intruder and paste the username wordlist there
 
 If using burp pro, use the filter option to filter negative (that is only show results that don't contain this term) for the error message "invalid username or password."
@@ -11,7 +14,7 @@ Apperently the devs forgot to add a "." when the username is valid and the passw
 
 So you should get a particular username with the error message "invalid username or password" without a "." in it
 
-Use this username (mine was announce, seems like this value could change based on the player) with passwords wordlist to solve the lab
+Use this username with passwords wordlist to solve the lab
 
 OR
 
