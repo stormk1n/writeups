@@ -1,10 +1,10 @@
-Lab06: Username enumeration via account lock
+# Lab06: Username enumeration via account lock
 PRACTITIONER
 
-PRINCIPLE
+# PRINCIPLE
 If a usernames is valid and a set of login attempts on this username fial, the users account should experience a lockdown
 
-METHOD
+# METHOD
 For this, we intercept a login attempt and set the attack type to cluster bomb
 
 For the password payload we set the payload type to Null payloads and give a payload count of 5 so each username is iterated over 5 times at least and the username payload use the provided usernames
