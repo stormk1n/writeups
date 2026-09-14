@@ -10,7 +10,7 @@ Bypassing rate limits and brute-force protection using multiple credentials in a
 {
 "username": "user", "password": ["123", 
                                  "password", 
-                                 "password123", ... ]
+                                 "password123" ]
 }
 ```
 instead of a single string
