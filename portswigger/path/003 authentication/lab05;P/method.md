@@ -11,7 +11,7 @@ Now, we create a username list, such that the entry for the user carlos appears 
 ```bash
 awk 'BEGIN{for(i=1;i<=100;i++){print "wiener"; print "carlos"}}' > usernames.txt
 ```
-Now, we modify the password file so that the valid credentials for wiener (passwd: peter) comes in at the beginning and then after every one line) using;
+Now, we modify the password file so that the valid credentials for wiener (passwd: peter) comes in at the beginning and then after every one line;
 ```bash
 awk 'BEGIN{print "peter"} {print "peter"; print}' passwords.txt > passwords2.txt
 ```
