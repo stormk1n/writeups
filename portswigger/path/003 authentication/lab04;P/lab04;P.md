@@ -1,16 +1,19 @@
 Lab: Username enumeration via response timing
+
 PRACTITIONER
+<br>
+<br>
 
-
-PRINCIPLE
+# PRINCIPLE
 The response time for a valid user should take longer, as it has to verify both the username and password
 
 So, in that regard if a username is wrong it should take a smaller amount of time, since an invalid username instantly fails the login
 
 But a valid username and an invalid password should take a longer amount of time compared to when it is invalid and a shorter amount of time compared to when both factors are valid
 
+<br>
 
-METHOD
+# METHOD
 Make a login request and send to intruder (feel free to tamper with username and password to see the time difference).
 
 Notice that after a few attempts at login, we are rate limitted ? Fix this by setting the header X-Forwarded-For
