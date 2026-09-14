@@ -1,4 +1,4 @@
-Lab: Username enumeration via response timing
+# Lab: Username enumeration via response timing
 
 PRACTITIONER
 <br>
