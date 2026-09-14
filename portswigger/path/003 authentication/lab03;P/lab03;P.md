@@ -1,4 +1,4 @@
-Lab03: Username enumeration via subtly different responses
+# Lab03: Username enumeration via subtly different responses
 
 PRACTITIONER
 <br>
