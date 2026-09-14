@@ -1,15 +1,16 @@
-Lab05: Broken brute-force protection, IP block
+# Lab05: Broken brute-force protection, IP block
 PRACTITIONER
 
-PRINCIPLE
+# PRINCIPLE
 Multiple login attempts (after 3) causes a rate limit on the user, however, we can reset the number of attempts we have on our hands by login into our account with our valid credentials.
 
+<br>
 
-METHOD
-Now, we create a username list, such that the entry for the user carlos appears 100 time alternating between our valid user wiener who also has 100 entries, using;
-
-awk 'BEGIN{for(i=1;i<=100;i++){print "alice"; print "bob"}}' > usernames.txt
-
+# METHOD
+Now, we create a username list, such that the entry for the user carlos appears 100 time alternating between our valid user wiener who also has 100 entries, with the bash command
+```bash
+awk 'BEGIN{for(i=1;i<=100;i++){print "wiener"; print "carlos"}}' > usernames.txt
+```
 Now we modify the password file so that the valid credentials for wiener (peter) comes in at the beginning and then after every one line) using;
 
 awk 'BEGIN{print "peter"} {print "peter"; print}' passwords.txt > passwords2.txt
@@ -17,3 +18,7 @@ awk 'BEGIN{print "peter"} {print "peter"; print}' passwords.txt > passwords2.txt
 With the wordlists set and done, we use a pitchfork attack to see which credentials for carlos are valid
 
 Sort the results by status code and pick that for carlos which has a status code of 302 to log into his account and solve the lab
+
+
+
+<br>
