@@ -1,4 +1,4 @@
-input_file = "passwd.txt"
+input_file = "passwd.txt"  # Replace with name you gave the candidate passwords file
 
 with open(input_file, "r") as infile:
     lines = infile.read().splitlines()
